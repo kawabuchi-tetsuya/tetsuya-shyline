@@ -1,0 +1,51 @@
+services:
+  api:
+    build:
+      context: ./backend/
+      dockerfile: Dockerfile
+    command: /bin/sh -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    volumes:
+      - ./backend:/api
+    ports:
+      - 3000:3000
+    depends_on:
+      db:
+        condition: service_healthy # dbコンテナが正常起動後に起動
+    tty: true
+    stdin_open: true
+    environment:
+      RAILS_ENV: development
+  db:
+    image: mysql:8.4.3
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
+    volumes:
+      - db-volume:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${ROOT_PASS}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASS}
+      TZ: ${TZ}
+    env_file:
+      - .env
+    ports:
+      - "${DB_PORT}:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  front:
+    build:
+      context: ./frontend/
+      dockerfile: Dockerfile
+    volumes:
+      - ./frontend:/usr/src/app
+    command: sh -c "cd app && npm run dev"
+    ports:
+      - 5173:5173
+    tty: true
+    stdin_open: true
+
+volumes:
+  db-volume:
