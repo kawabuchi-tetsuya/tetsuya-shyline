@@ -47,6 +47,14 @@ group :development, :test do
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
   gem 'brakeman', require: false
 
+  # デバッグツール pryコンソールを使えるようにする
+  # [https://github.com/deivid-rodriguez/pry-byebug]
+  gem 'pry-byebug'
+  # [https://github.com/pry/pry-doc]
+  gem 'pry-doc'
+  # [https://github.com/pry/pry-rails]
+  gem 'pry-rails'
+
   # https://github.com/rspec/rspec-rails
   gem 'rspec-rails'
 
