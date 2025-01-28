@@ -1,0 +1,206 @@
+Rails:
+  Enabled: true
+
+Rails/ActionControllerFlashBeforeRender:
+  Enabled: true
+
+Rails/ActionControllerTestCase:
+  Enabled: true
+
+Rails/ActionOrder:
+  Enabled: true
+
+Rails/ActiveRecordCallbacksOrder:
+  Enabled: true
+
+Rails/ActiveSupportOnLoad:
+  Enabled: true
+
+Rails/AddColumnIndex:
+  Enabled: true
+
+Rails/AfterCommitOverride:
+  Enabled: true
+
+Rails/AttributeDefaultBlockValue:
+  Enabled: true
+
+Rails/BulkChangeTable:
+  Enabled: false
+
+Rails/CompactBlank:
+  Enabled: true
+
+Rails/DangerousColumnNames:
+  Enabled: true
+
+Rails/Delegate:
+  Enabled: false
+
+Rails/DeprecatedActiveModelErrorsMethods:
+  Enabled: true
+
+Rails/DotSeparatedKeys:
+  Enabled: true
+
+Rails/DuplicateAssociation:
+  Enabled: true
+
+Rails/DuplicateScope:
+  Enabled: true
+
+Rails/DurationArithmetic:
+  Enabled: true
+
+Rails/EagerEvaluationLogMessage:
+  Enabled: true
+
+Rails/EnumSyntax:
+  Enabled: true
+
+Rails/EnvLocal:
+  Enabled: true
+
+Rails/ExpandedDateRange:
+  Enabled: true
+
+Rails/Exit:
+  Enabled: false
+
+Rails/FindById:
+  Enabled: false
+
+Rails/FilePath:
+  Enabled: false
+
+Rails/FreezeTime:
+  Enabled: true
+
+Rails/I18nLazyLookup:
+  Enabled: true
+
+Rails/I18nLocaleAssignment:
+  Enabled: true
+
+Rails/I18nLocaleTexts:
+  Enabled: true
+
+Rails/IgnoredColumnsAssignment:
+  Enabled: true
+
+Rails/Inquiry:
+  Enabled: false
+
+Rails/MailerName:
+  Enabled: true
+
+Rails/MatchRoute:
+  Enabled: false
+
+Rails/MigrationClassName:
+  Enabled: true
+
+Rails/MultipleRoutePaths:
+  Enabled: true
+
+Rails/NegateInclude:
+  Enabled: false
+
+Rails/Pluck:
+  Enabled: false
+
+Rails/PluckInWhere:
+  Enabled: false
+
+Rails/Present:
+  Enabled: false
+
+Rails/RedundantActiveRecordAllMethod:
+  Enabled: true
+
+Rails/RedundantPresenceValidationOnBelongsTo:
+  Enabled: true
+
+Rails/RedundantTravelBack:
+  Enabled: true
+
+Rails/RenderInline:
+  Enabled: false
+
+Rails/RenderPlainText:
+  Enabled: false
+
+Rails/ResponseParsedBody:
+  Enabled: true
+
+Rails/RootJoinChain:
+  Enabled: true
+
+Rails/RootPathnameMethods:
+  Enabled: true
+
+Rails/RootPublicPath:
+  Enabled: true
+
+Rails/SafeNavigation:
+  ConvertTry: true
+
+Rails/SaveBang:
+  Enabled: true
+
+Rails/ShortI18n:
+  Enabled: false
+
+Rails/SquishedSQLHeredocs:
+  Enabled: true
+
+Rails/StripHeredoc:
+  Enabled: true
+
+Rails/StrongParametersExpect:
+  Enabled: true
+
+Rails/ThreeStateBooleanColumn:
+  Enabled: true
+
+Rails/TimeZoneAssignment:
+  Enabled: true
+
+Rails/ToFormattedS:
+  Enabled: true
+
+Rails/ToSWithArgument:
+  Enabled: true
+
+Rails/TopLevelHashWithIndifferentAccess:
+  Enabled: true
+
+Rails/TransactionExitStatement:
+  Enabled: true
+
+Rails/UnknownEnv:
+  Environments:
+    - development # rubocop default.yml
+    - test # rubocop default.yml
+    - production # rubocop default.yml
+
+Rails/UnusedRenderContent:
+  Enabled: true
+
+Rails/WhereEquals:
+  Enabled: true
+
+Rails/WhereExists:
+  Enabled: false
+
+Rails/WhereMissing:
+  Enabled: true
+
+Rails/WhereNot:
+  Enabled: true
+
+Rails/WhereNotWithMultipleConditions:
+  Enabled: true
+
+Rails/WhereRange:
+  Enabled: true
