@@ -38,14 +38,14 @@ gem 'thruster', require: false
 gem 'rack-cors'
 
 group :development, :test do
+  # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
+  gem 'brakeman', require: false
+
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'debug', platforms: %i[ mri windows ], require: 'debug/prelude'
 
   # https://github.com/thoughtbot/factory_bot
   gem 'factory_bot_rails'
-
-  # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
-  gem 'brakeman', require: false
 
   # デバッグツール pryコンソールを使えるようにする
   # [https://github.com/deivid-rodriguez/pry-byebug]
@@ -54,6 +54,9 @@ group :development, :test do
   gem 'pry-doc'
   # [https://github.com/pry/pry-rails]
   gem 'pry-rails'
+
+  # DBスキーマ管理[https://github.com/ridgepole/ridgepole]
+  gem 'ridgepole'
 
   # https://github.com/rspec/rspec-rails
   gem 'rspec-rails'
