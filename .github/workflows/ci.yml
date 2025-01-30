@@ -25,7 +25,14 @@ jobs:
           - 3306:3306
         env:
           MYSQL_ROOT_PASSWORD: root
-        options: --health-cmd "mysqladmin ping" --health-interval 10s --health-timeout 5s --health-retries 10
+          MYSQL_DATABASE: api_test
+          MYSQL_USER: user
+          MYSQL_PASSWORD: password
+        options: >-
+          --health-cmd="mysqladmin ping --silent"
+          --health-interval=5s
+          --health-timeout=3s
+          --health-retries=3
 
     steps:
       - name: Checkout code
@@ -47,7 +54,6 @@ jobs:
 
       - name: Bundler and gem install
         run: |
-          gem install bundler
           bundle config set path 'vendor/bundle'
           bundle install --jobs 4 --retry 3
 
@@ -86,7 +92,6 @@ jobs:
 
       - name: Bundler and gem install
         run: |
-          gem install bundler
           bundle config set path 'vendor/bundle'
           bundle install --jobs 4 --retry 3
 
@@ -102,6 +107,11 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Use Node.js 22.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
 
       - name: Cache node modules
         uses: actions/cache@v3
