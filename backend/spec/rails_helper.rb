@@ -71,3 +71,11 @@ RSpec.configure do |config|
   # FactoryBotクラス名省略
   config.include FactoryBot::Syntax::Methods
 end
+
+# Gem(shoulda-matchers)の設定
+Shoulda::Matchers.configure do |config|
+  config.integrate do |with|
+    with.test_framework :rspec
+    with.library :rails
+  end
+end
