@@ -1,1 +1,1 @@
-require 'test_examples.schema.rb'
+require 'users.schema.rb'
