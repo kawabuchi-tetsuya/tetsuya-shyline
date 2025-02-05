@@ -17,4 +17,16 @@ ActiveRecord::Schema[8.0].define(version: 0) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "users", charset: "utf8mb4", collation: "utf8mb4_bin", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
+    t.string "name", default: "", null: false, comment: "ユーザー名"
+    t.string "screen_name", default: "", null: false, comment: "ユーザー表示名"
+    t.string "email", default: "", null: false, comment: "メールアドレス"
+    t.string "password_digest", null: false, comment: "パスワードのハッシュ値"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["name"], name: "index_users_on_name", unique: true
+    t.index ["screen_name"], name: "index_users_on_screen_name"
+  end
 end
