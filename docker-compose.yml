@@ -17,8 +17,8 @@ services:
       RAILS_ENV: development
   db:
     image: mysql:8.4.3
-    command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
     volumes:
+      - ./backend/my.cnf:/etc/mysql/conf.d/my.cnf
       - db-volume:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: ${ROOT_PASS}
