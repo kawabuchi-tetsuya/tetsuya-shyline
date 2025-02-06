@@ -37,6 +37,15 @@ gem 'thruster', require: false
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin Ajax possible
 gem 'rack-cors'
 
+# ユーザー認証を提供[https://github.com/heartcombo/devise]
+gem 'devise'
+
+# deviseを日本語化する[https://github.com/tigrish/devise-i18n]
+gem 'devise-i18n'
+
+# ユーザーのトークン認証を提供する[https://github.com/lynndylanhurley/devise_token_auth]
+gem 'devise_token_auth'
+
 group :development, :test do
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
   gem 'brakeman', require: false
@@ -46,6 +55,12 @@ group :development, :test do
 
   # https://github.com/thoughtbot/factory_bot
   gem 'factory_bot_rails'
+
+  # ダミーデータ生成[https://github.com/faker-ruby/faker]
+  gem 'faker'
+
+  # メール送信をテストする[https://github.com/fgrehm/letter_opener_web]
+  gem 'letter_opener_web'
 
   # デバッグツール pryコンソールを使えるようにする
   # [https://github.com/deivid-rodriguez/pry-byebug]
