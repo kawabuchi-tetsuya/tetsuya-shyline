@@ -1,0 +1,38 @@
+# feature_request.yml
+name: 機能追加リクエスト
+description: 新しい機能の提案や実装する機能の管理に使用します。
+title: 'Feature: '
+body:
+  - type: textarea
+    id: overview
+    attributes:
+      label: 概要
+      description: 追加したい機能の概要を記載してください。
+    validations:
+      required: true
+  - type: textarea
+    id: purpose
+    attributes:
+      label: 目的・背景
+      description: この機能を追加する理由や背景を記載してください。（解決したい課題など）
+    validations:
+      required: true
+  - type: textarea
+    id: implementation
+    attributes:
+      label: 実装方針
+      description: どのように実装するかの方針やアイデアを記載してください。
+      value: |
+        - 
+        - 
+        - 
+  - type: textarea
+    id: related_issues
+    attributes:
+      label: 関連 Issue / PR
+      description: 関連する Issue や Pull Request のリンクを記載してください。（あれば）
+  - type: textarea
+    id: notes
+    attributes:
+      label: 補足
+      description: その他の補足情報を記載してください。
