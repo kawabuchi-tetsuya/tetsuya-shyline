@@ -23,7 +23,7 @@ body:
         - Linux
         - iOS
         - Android
-      default: macOS
+      default: 1
     validations:
       required: true
   - type: dropdown
@@ -38,7 +38,7 @@ body:
         - Safari
         - Opera
         - その他
-      default: Chrome
+      default: 0
     validations:
       required: true
   - type: textarea
