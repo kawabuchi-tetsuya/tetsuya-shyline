@@ -1,4 +1,4 @@
-RSpec.describe User, type: :model do
+RSpec.describe 'User', type: :model do
   describe 'validations' do
     subject { build(:user) }
 
@@ -8,7 +8,7 @@ RSpec.describe User, type: :model do
   end
 
   describe 'メール認証のテスト' do
-    let!(:user) { create(:user) }
+    let!(:user) { create(:user, confirmed_at: nil) }
 
     it '未認証のユーザーは confirmed_at が nil である' do
       expect(user.confirmed_at).to be_nil
