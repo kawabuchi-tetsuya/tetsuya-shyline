@@ -42,5 +42,7 @@ module Api
         controller_specs: true,
         request_specs: true
     end
+
+    config.i18n.default_locale = :ja
   end
 end
