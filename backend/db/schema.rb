@@ -11,11 +11,14 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[8.0].define(version: 0) do
-  create_table "test_examples", charset: "utf8mb4", collation: "utf8mb4_bin", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
-    t.string "name", default: "", null: false
-    t.integer "age", default: 20, null: false
+  create_table "posts", charset: "utf8mb4", collation: "utf8mb4_bin", comment: "投稿", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
+    t.bigint "user_id", null: false, comment: "投稿者ID"
+    t.text "content", null: false, comment: "投稿本文"
+    t.integer "status", null: false, comment: "ステータス(10:未保存, 20:下書き, 30:公開中)"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["content"], name: "index_posts_on_content", type: :fulltext
+    t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_bin", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
@@ -43,4 +46,6 @@ ActiveRecord::Schema[8.0].define(version: 0) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
+
+  add_foreign_key "posts", "users"
 end
