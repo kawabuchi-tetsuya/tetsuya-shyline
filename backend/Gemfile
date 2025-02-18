@@ -81,6 +81,9 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem 'rubocop-rails-omakase', require: false
+
+  # [https://matchers.shoulda.io/docs/v5.3.0/]
+  gem 'shoulda-matchers', '~> 5.0'
 end
 
 group :development do
@@ -99,9 +102,4 @@ group :development do
 
   # RSpec実行高速化[https://github.com/jonleighton/spring-commands-rspec]
   gem 'spring-commands-rspec'
-end
-
-group :test do
-  # [https://matchers.shoulda.io/docs/v5.3.0/]
-  gem 'shoulda-matchers', '~> 5.0'
 end
