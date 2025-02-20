@@ -20,6 +20,9 @@ gem 'devise-i18n'
 # ユーザーのトークン認証を提供する[https://github.com/lynndylanhurley/devise_token_auth]
 gem 'devise_token_auth'
 
+# enumを日本語化[https://github.com/zmbacker/enum_help]
+gem 'enum_help'
+
 # Deploy this application anywhere as a Docker container [https://kamal-deploy.org]
 gem 'kamal', require: false
 

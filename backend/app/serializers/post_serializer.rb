@@ -1,5 +1,5 @@
 class PostSerializer < ActiveModel::Serializer
-  attributes :id, :content, :created_at, :from_today
+  attributes :id, :content, :status, :created_at, :from_today
   belongs_to :user, serializer: UserSerializer
 
   def created_at
@@ -12,6 +12,10 @@ class PostSerializer < ActiveModel::Serializer
 
     return format_years_or_months(created_at, now) if years_or_months_ago?(created_at, now)
     format_days_hours_minutes_or_seconds(created_at, now)
+  end
+
+  def status
+    object.status_i18n
   end
 
   private
