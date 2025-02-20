@@ -87,6 +87,12 @@ group :development, :test do
 end
 
 group :development do
+  # bulk insert[https://github.com/zdennis/activerecord-import]
+  gem 'activerecord-import'
+
+  # N+1問題を検知する [https://github.com/flyerhzm/bullet]
+  gem 'bullet'
+
   # rubocop
   # https://github.com/rubocop/rubocop
   gem 'rubocop', require: false
