@@ -13,7 +13,7 @@ RSpec.describe 'Api::V1::Posts', type: :request do
 
         aggregate_failures do
           expect(response).to have_http_status(:success)
-          expect(res[0].keys).to eq ['id', 'content', 'created_at', 'from_today', 'user']
+          expect(res[0].keys).to eq ['id', 'content', 'status', 'created_at', 'from_today', 'user']
           expect(res[0]['user'].keys).to eq ['name']
           expect(res.length).to eq(3)
         end
@@ -35,7 +35,7 @@ RSpec.describe 'Api::V1::Posts', type: :request do
 
           aggregate_failures do
             expect(response).to have_http_status(:success)
-            expect(res.keys).to eq ['id', 'content', 'created_at', 'from_today', 'user']
+            expect(res.keys).to eq ['id', 'content', 'status', 'created_at', 'from_today', 'user']
             expect(res['user'].keys).to eq ['name']
           end
         end

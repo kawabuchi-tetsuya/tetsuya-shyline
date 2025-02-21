@@ -13,7 +13,7 @@
 ActiveRecord::Schema[8.0].define(version: 0) do
   create_table "posts", charset: "utf8mb4", collation: "utf8mb4_bin", comment: "投稿", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "投稿者ID"
-    t.text "content", null: false, comment: "投稿本文"
+    t.text "content", comment: "投稿本文"
     t.integer "status", null: false, comment: "ステータス(10:未保存, 20:下書き, 30:公開中)"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

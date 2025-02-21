@@ -9,7 +9,6 @@ create_table :posts,
                 foreign_key: true,
                 comment: '投稿者ID'
   t.text :content,
-          null: false,
           comment: '投稿本文'
   t.integer :status,
              null: false,
