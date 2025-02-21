@@ -1,4 +1,74 @@
 RSpec.describe 'Api::V1::Current::Posts', type: :request do
+  describe 'GET api/v1/current/posts' do
+    subject { get(api_v1_current_posts_path, headers:) }
+
+    let!(:current_user) { create(:user) }
+    let!(:headers) { current_user.create_new_auth_token }
+    let!(:other_user) { create(:user) }
+
+    before { create_list(:post, 2, user: other_user) }
+
+    context 'ログインユーザーの投稿が存在するとき' do
+      before { create_list(:post, 3, user: current_user) }
+
+      it 'ログインユーザーの投稿一覧を取得する' do
+        aggregate_failures do
+          subject
+          res = response.parsed_body
+          expect(res.length).to eq(3)
+          expect(res[0].keys).to eq ['id', 'content', 'status', 'created_at', 'from_today', 'user']
+          expect(res[0]['user'].keys).to eq ['name']
+          expect(response).to have_http_status(:ok)
+        end
+      end
+    end
+
+    context 'ログインユーザーの投稿が存在しないとき' do
+      it '空の配列が返る' do
+        aggregate_failures do
+          subject
+          res = response.parsed_body
+          expect(res.length).to eq(0)
+          expect(response).to have_http_status(:ok)
+        end
+      end
+    end
+  end
+
+  describe 'GET api/v1/current/posts/:id' do
+    subject { get(api_v1_current_post_path(post_id), headers:) }
+
+    let!(:current_user) { create(:user) }
+    let!(:headers) { current_user.create_new_auth_token }
+
+    context 'ログインユーザーの投稿の場合' do
+      let!(:current_user_post) { create(:post, user: current_user) }
+      let!(:post_id) { current_user_post.id }
+
+      it '投稿を取得する' do
+        aggregate_failures do
+          subject
+          res = response.parsed_body
+          expect(res.keys).to eq ['id', 'content', 'status', 'created_at', 'from_today', 'user']
+          expect(res['user'].keys).to eq ['name']
+          expect(response).to have_http_status(:ok)
+        end
+      end
+    end
+
+    context 'ログインユーザー以外の投稿の場合' do
+      let!(:other_user_post) { create(:post) }
+      let!(:post_id) { other_user_post.id }
+
+      it '投稿を取得できない' do
+        aggregate_failures do
+          subject
+          expect(response).to have_http_status(:not_found)
+        end
+      end
+    end
+  end
+
   describe 'POST api/v1/current/posts' do
     subject { post(api_v1_current_posts_path, headers:) }
 
