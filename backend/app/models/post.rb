@@ -1,4 +1,5 @@
 class Post < ApplicationRecord
+  POSTS_PER_PAGE = 20
   CONTENT_MAX_LENGTH = 140
 
   enum :status, { unsaved: 10, draft: 20, published: 30 }

@@ -18,6 +18,8 @@ ActiveRecord::Schema[8.0].define(version: 0) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["content"], name: "index_posts_on_content", type: :fulltext
+    t.index ["created_at", "id"], name: "index_posts_on_created_at_and_id"
+    t.index ["status"], name: "index_posts_on_status"
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
