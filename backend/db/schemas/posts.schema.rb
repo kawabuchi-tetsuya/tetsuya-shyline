@@ -16,4 +16,6 @@ create_table :posts,
   t.timestamps
 
   add_index :posts, :content, type: :fulltext
+  add_index :posts, :status
+  add_index :posts, %i[created_at id]
 end

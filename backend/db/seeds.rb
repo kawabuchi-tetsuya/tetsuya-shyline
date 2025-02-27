@@ -1,6 +1,8 @@
 USERS_COUNT = 2
 TOTAL_POSTS_COUNT = 30
 POST_BATCH_SIZE = 1000
+FAKER_RANDOM_NUM = 42
+Faker::Config.random = Random.new(FAKER_RANDOM_NUM)
 
 users = []
 USERS_COUNT.times do |i|
