@@ -37,6 +37,6 @@ class PostSerializer < ActiveModel::Serializer
   end
 
   def years_or_months_ago?(created_at, now)
-    (now.year - created_at.year).positive? || (now.month - created_at.month).positive?
+    (now.year - created_at.year).positive? || (now.month - created_at.month - ((now.day >= created_at.day) ? 0: 1)).positive?
   end
 end
