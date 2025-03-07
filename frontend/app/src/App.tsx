@@ -1,14 +1,26 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import Home from './pages/home' // ホームページ（必要なら作成）
-import HealthCheck from './pages/health_check' // 作成したページ
+// ホームページ
+import Home from './pages/home'
+// ヘルスチェックページ
+import HealthCheck from './pages/health_check'
+// 投稿一覧ページ
+import Index from './pages/index'
+
+// ヘッダー
+import Header from './components/Header'
 
 function App() {
   return (
     <Router>
+      <Header />
+
       <Routes>
-        <Route path="/" element={<Home />} /> {/* ホームページ */}
-        <Route path="/health-check" element={<HealthCheck />} />{' '}
+        {/* ホームページ */}
+        <Route path="/" element={<Home />} />
         {/* ヘルスチェック */}
+        <Route path="/health-check" element={<HealthCheck />} />{' '}
+        {/* 投稿一覧ページ */}
+        <Route path="/posts" element={<Index />} />
       </Routes>
     </Router>
   )
