@@ -4,8 +4,9 @@ import CurrentUserFetch from './components/CurrentUserFetch'
 // Route
 import Home from './pages/home'
 import HealthCheck from './pages/health_check'
-import SignIn from './pages/sign_in'
 import Index from './pages/index'
+import SignIn from './pages/sign_in'
+import SignOut from './pages/sign_out'
 
 // ヘッダー
 import Header from './components/Header'
@@ -21,10 +22,12 @@ function App() {
         <Route path="/" element={<Home />} />
         {/* ヘルスチェック */}
         <Route path="/health-check" element={<HealthCheck />} />{' '}
-        {/* サインインページ */}
-        <Route path="/sign-in" element={<SignIn />} />
         {/* 投稿一覧ページ */}
         <Route path="/posts" element={<Index />} />
+        {/* サインインページ */}
+        <Route path="/sign-in" element={<SignIn />} />
+        {/* サインアウトページ */}
+        <Route path="/sign-out" element={<SignOut />} />
       </Routes>
     </Router>
   )
