@@ -1,6 +1,6 @@
 import { Post } from './post'
 
-export interface PostsResponse {
+export type PostsResponse = {
   posts: Post[]
   meta: {
     next_keyset?: {
