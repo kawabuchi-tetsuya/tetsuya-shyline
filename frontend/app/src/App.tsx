@@ -11,11 +11,15 @@ import SignOut from './pages/sign_out'
 // ヘッダー
 import Header from './components/Header'
 
+// 通知バー
+import Snackbar from './components/Snackbar'
+
 function App() {
   return (
     <Router>
       <CurrentUserFetch />
       <Header />
+      <Snackbar />
 
       <Routes>
         {/* ホームページ */}

@@ -1,12 +1,13 @@
 import { useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
-import { useUserState } from './useGlobalState'
+import { useUserState, useSnackbarState } from './useGlobalState'
 import { SignInFormData } from '../types/signInFormData'
 
 export const useSignIn = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [user, setUser] = useUserState()
+  const [, setSnackbar] = useSnackbarState()
   const navigate = useNavigate()
 
   const signIn = async (data: SignInFormData) => {
@@ -26,9 +27,19 @@ export const useSignIn = () => {
         ...(user ?? {}),
         isFetched: false,
       })
+      setSnackbar({
+        message: 'サインインに成功しました',
+        severity: 'success',
+        pathname: '/posts',
+      })
       navigate('/posts')
     } catch (error) {
       console.error('Sign-in error:', error)
+      setSnackbar({
+        message: '登録ユーザーが見つかりません',
+        severity: 'error',
+        pathname: '/sign-in',
+      })
     } finally {
       setIsLoading(false)
     }
