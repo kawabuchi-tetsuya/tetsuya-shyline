@@ -9,5 +9,6 @@
     "javascriptreact",
     "typescript",
     "typescriptreact"
-  ]
+  ],
+  "typescript.tsdk": "frontend/app/node_modules/typescript/lib"
 }

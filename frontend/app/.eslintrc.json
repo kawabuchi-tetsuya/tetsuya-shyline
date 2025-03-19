@@ -16,6 +16,7 @@
   ],
   "parserOptions": {
     "ecmaVersion": "latest",
+    "project": "./tsconfig.json",
     "sourceType": "module"
   },
   "plugins": ["react", "react-hooks", "import", "@typescript-eslint"],

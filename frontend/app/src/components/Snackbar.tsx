@@ -1,6 +1,6 @@
 import { Snackbar, Alert } from '@mui/material'
 import { useEffect, useState } from 'react'
-import { useSnackbarState } from '../hooks/useGlobalState'
+import { useSnackbarState } from '@/hooks/useGlobalState'
 
 const SuccessSnackbar = () => {
   const [snackbar, setSnackbar] = useSnackbarState()

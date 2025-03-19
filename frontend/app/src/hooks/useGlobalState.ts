@@ -1,6 +1,6 @@
 import useSWR from 'swr'
-import { UserStateType } from '../types/userStateType'
-import { SnackbarStateType } from '../types/snackbarStateType'
+import { UserStateType } from '@/types/userStateType'
+import { SnackbarStateType } from '@/types/snackbarStateType'
 
 export const useUserState = () => {
   const fallbackData: UserStateType = {

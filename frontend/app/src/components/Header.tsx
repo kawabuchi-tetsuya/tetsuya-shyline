@@ -127,7 +127,7 @@ const Header = () => {
                       </Typography>
                     </Box>
                     <Divider />
-                    <MenuItem>
+                    <MenuItem component={Link} to="/current/posts">
                       <ListItemIcon>
                         <ArticleIcon fontSize="small" />
                       </ListItemIcon>

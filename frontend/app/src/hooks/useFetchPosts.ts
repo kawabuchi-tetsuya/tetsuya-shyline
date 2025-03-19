@@ -1,15 +1,14 @@
 // 投稿データを取得するカスタムフック
 import { useState, useRef } from 'react'
 import useSWR from 'swr'
-import apiClient from '../axiosConfig'
-import { PostsResponse } from '../types/postsResponse'
+import { PostsResponse } from '@/types/postsResponse'
 import { useNextKeyset } from './useNextKeyset'
 import { fetchMorePosts } from './fetchMorePosts'
+import { fetcher } from '@/utils'
 
-const fetcher = (url: string) => apiClient.get<PostsResponse>(url).then((res) => res.data)
-
-export const useFetchPosts = () => {
-  const { data, error, mutate } = useSWR('/posts', fetcher)
+export const useFetchPosts = (api_path: string) => {
+  const url = import.meta.env.VITE_API_BASE_URL + api_path
+  const { data, error, mutate } = useSWR(url, fetcher)
   const { nextKeyset, setNextKeyset } = useNextKeyset(data)
   const [isLoadingMore, setIsLoadingMore] = useState(false)
 

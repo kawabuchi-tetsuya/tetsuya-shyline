@@ -1,12 +1,12 @@
 // 投稿データを取得して表示するコンポーネント
 import React from 'react'
 import { Grid } from '@mui/material'
-import { Post } from '../types/post'
+import { Post } from '@/types/post'
 import PostItem from './PostItem'
 
 type PostListProps = {
   posts: Post[]
-};
+}
 
 const PostList: React.FC<PostListProps> = ({ posts }) => {
   return (
@@ -17,7 +17,7 @@ const PostList: React.FC<PostListProps> = ({ posts }) => {
         </Grid>
       ))}
     </Grid>
-  );
-};
+  )
+}
 
-export default PostList;
+export default PostList

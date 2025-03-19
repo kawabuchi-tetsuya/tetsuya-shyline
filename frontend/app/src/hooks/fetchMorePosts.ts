@@ -1,7 +1,9 @@
-import apiClient from '../axiosConfig'
-import { PostsResponse } from '../types/postsResponse'
+import apiClient from '@/axiosConfig'
+import { PostsResponse } from '@/types/postsResponse'
 
-export const fetchMorePosts = async (nextKeyset: PostsResponse['meta']['next_keyset']) => {
+export const fetchMorePosts = async (
+  nextKeyset: PostsResponse['meta']['next_keyset']
+) => {
   if (!nextKeyset) return { posts: [], nextKeyset: null }
 
   const { data: morePostsData } = await apiClient.get<PostsResponse>(
