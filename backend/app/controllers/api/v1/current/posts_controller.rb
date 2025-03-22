@@ -34,15 +34,18 @@ class Api::V1::Current::PostsController < Api::V1::BaseController
   end
 
   def resolve_paginated_posts(keyset_updated_at, keyset_id)
+    base_scope = current_user.posts.not_unsaved.preload(:user)
+
     if keyset_updated_at.present? && keyset_id.present?
-      current_user.posts.not_unsaved.where(
+      base_scope.where(
         '(posts.updated_at < ?) OR (posts.updated_at = ? AND posts.id < ?)',
         Time.zone.parse(keyset_updated_at),
         Time.zone.parse(keyset_updated_at),
         keyset_id.to_i,
-      ).order(updated_at: :desc, id: :desc).eager_load(:user).limit(Post::POSTS_PER_PAGE)
+      )
     else
-      current_user.posts.not_unsaved.order(updated_at: :desc, id: :desc).eager_load(:user).limit(Post::POSTS_PER_PAGE)
-    end
+      base_scope
+    end.
+      order(updated_at: :desc, id: :desc).limit(Post::POSTS_PER_PAGE)
   end
 end

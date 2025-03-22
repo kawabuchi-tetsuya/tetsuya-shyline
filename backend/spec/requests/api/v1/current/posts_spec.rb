@@ -1,6 +1,6 @@
 RSpec.describe 'Api::V1::Current::Posts', type: :request do
   describe 'GET api/v1/current/posts' do
-    subject { get(api_v1_current_posts_path, headers:) }
+    subject { get(api_v1_current_posts_path(params), headers:) }
 
     let!(:current_user) { create(:user) }
     let!(:headers) { current_user.create_new_auth_token }
@@ -9,27 +9,136 @@ RSpec.describe 'Api::V1::Current::Posts', type: :request do
     before { create_list(:post, 2, user: other_user) }
 
     context 'ログインユーザーの投稿が存在するとき' do
-      before { create_list(:post, 3, user: current_user) }
+      before { create_list(:post, Post::POSTS_PER_PAGE * 2, user: current_user) }
 
-      it 'ログインユーザーの投稿一覧を取得する' do
-        aggregate_failures do
+      let!(:current_user_posts) { current_user.posts.not_unsaved.order(updated_at: :desc, id: :desc) }
+
+      context 'params を指定しないとき' do
+        let!(:params) { nil }
+        let!(:got_posts) { current_user_posts[0, Post::POSTS_PER_PAGE] }
+
+        it 'レスポンス ok が返る' do
+          subject
+          expect(response).to have_http_status(:ok)
+        end
+
+        it 'レスポンスの構造が正しい' do
           subject
           res = response.parsed_body
-          expect(res.length).to eq(3)
-          expect(res[0].keys).to eq ['id', 'content', 'status', 'created_at', 'from_today', 'user']
-          expect(res[0]['user'].keys).to eq ['name']
+
+          aggregate_failures do
+            expect(res.keys).to eq ['posts', 'meta']
+            expect(res['posts'][0].keys).to eq ['id', 'content', 'status', 'created_at', 'from_today', 'user']
+            expect(res['posts'][0]['user'].keys).to eq ['name']
+            expect(res['meta'].keys).to eq ['next_keyset']
+            expect(res['meta']['next_keyset'].keys).to eq ['updated_at', 'id']
+          end
+        end
+
+        it "#{Post::POSTS_PER_PAGE}件のレコードが取得される" do
+          subject
+          res = response.parsed_body
+
+          expect(res['posts'].length).to eq(Post::POSTS_PER_PAGE)
+        end
+
+        it 'next_keyset の値が正しい' do
+          subject
+          res = response.parsed_body
+          last_post = got_posts.last
+
+          aggregate_failures do
+            expect(res['meta']['next_keyset']['updated_at']).to eq(
+              last_post.updated_at.strftime('%Y-%m-%dT%H:%M:%S.%6N%z'),
+            )
+            expect(res['meta']['next_keyset']['id']).to eq(last_post.id)
+          end
+        end
+      end
+
+      context "params で#{Post::POSTS_PER_PAGE}件目の updated_at と id を渡すとき" do
+        let!(:keyset_post) { current_user_posts[Post::POSTS_PER_PAGE - 1] }
+        let!(:got_posts) { current_user_posts[Post::POSTS_PER_PAGE, Post::POSTS_PER_PAGE] }
+        let!(:params) { { updated_at: keyset_post.updated_at.strftime('%Y-%m-%dT%H:%M:%S.%6N%z'), id: keyset_post.id } }
+
+        it 'レスポンス ok が返る' do
+          subject
           expect(response).to have_http_status(:ok)
+        end
+
+        it 'レスポンスの構造が正しい' do
+          subject
+          res = response.parsed_body
+
+          aggregate_failures do
+            expect(res.keys).to eq ['posts', 'meta']
+            expect(res['posts'][0].keys).to eq ['id', 'content', 'status', 'created_at', 'from_today', 'user']
+            expect(res['posts'][0]['user'].keys).to eq ['name']
+            expect(res['meta'].keys).to eq ['next_keyset']
+            expect(res['meta']['next_keyset'].keys).to eq ['updated_at', 'id']
+          end
+        end
+
+        it "#{Post::POSTS_PER_PAGE}件のレコードが取得される" do
+          subject
+          res = response.parsed_body
+
+          expect(res['posts'].length).to eq(Post::POSTS_PER_PAGE)
+        end
+
+        it 'next_keyset の値が正しい' do
+          subject
+          res = response.parsed_body
+          last_post = got_posts.last
+
+          aggregate_failures do
+            expect(res['meta']['next_keyset']['updated_at']).to eq(
+              last_post.updated_at.strftime('%Y-%m-%dT%H:%M:%S.%6N%z'),
+            )
+            expect(res['meta']['next_keyset']['id']).to eq(last_post.id)
+          end
+        end
+      end
+
+      context 'params で指定した条件を満たすレコードがないとき' do
+        let!(:params) { { updated_at: Time.zone.local(1900, 1, 1, 0, 0, 0).strftime('%Y-%m-%dT%H:%M:%S.%6N%z'), id: 1 } }
+
+        it 'レスポンス ok が返る' do
+          subject
+          expect(response).to have_http_status(:ok)
+        end
+
+        it 'レスポンスの構造が正しい' do
+          subject
+          res = response.parsed_body
+
+          aggregate_failures do
+            expect(res.keys).to eq ['posts', 'meta']
+            expect(res['posts'].length).to eq(0)
+            expect(res['meta'].keys).to eq ['next_keyset']
+            expect(res['meta']['next_keyset']).to be_nil
+          end
         end
       end
     end
 
     context 'ログインユーザーの投稿が存在しないとき' do
-      it '空の配列が返る' do
+      let!(:params) { nil }
+
+      it 'レスポンス ok が返る' do
+        subject
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'レスポンスの構造が正しい' do
+        subject
+        res = response.parsed_body
+
         aggregate_failures do
-          subject
-          res = response.parsed_body
-          expect(res.length).to eq(0)
-          expect(response).to have_http_status(:ok)
+          expect(res.keys).to eq ['posts', 'meta']
+          expect(res['posts'].length).to eq(0)
+          expect(res['meta'].keys).to eq ['next_keyset']
+          expect(res['meta']['next_keyset']).to be_nil
         end
       end
     end
