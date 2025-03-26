@@ -1,17 +1,12 @@
-import axios, { AxiosResponse, AxiosError } from 'axios'
+import apiClient from '@/axiosConfig'
+import camelcaseKeys from 'camelcase-keys'
 
-export const fetcher = (url: string) =>
-  axios
-    .get(url, {
-      headers: {
-        'Content-Type': 'application/json',
-        'access-token': localStorage.getItem('access-token') || '',
-        client: localStorage.getItem('client') || '',
-        uid: localStorage.getItem('uid') || '',
-      },
-    })
-    .then((res: AxiosResponse) => res.data)
-    .catch((error: AxiosError) => {
-      console.error('Fetch error:', error.message)
-      throw error
-    })
+export const fetcher = async (url: string) => {
+  try {
+    const response = await apiClient.get(url)
+    return camelcaseKeys(response.data, { deep: true })
+  } catch (error) {
+    console.error('Fetch error:', error)
+    throw error
+  }
+}

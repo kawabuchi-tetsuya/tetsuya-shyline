@@ -1,4 +1,4 @@
-import { Box, Container, Typography } from '@mui/material'
+import { Box, CircularProgress, Container, Typography } from '@mui/material'
 import PostList from '@/components/PostList'
 import Loader from '@/components/Loader'
 import { useFetchPosts } from '@/hooks/useFetchPosts'
@@ -6,11 +6,10 @@ import useInfiniteScroll from '@/hooks/useInfiniteScroll'
 import { styles } from '@/styles'
 
 const Index = () => {
-  const { posts, error, loading, loadMorePosts, nextKeyset } =
+  const { postData, error, loading, loadMorePosts, isLoadingMore, hasMore } =
     useFetchPosts('/posts')
-  const hasMore = nextKeyset !== null
 
-  useInfiniteScroll(loadMorePosts, hasMore)
+  const { triggerRef } = useInfiniteScroll(loadMorePosts, hasMore)
 
   if (error) return <div>エラーが発生しました。</div>
   if (loading) return <Loader />
@@ -32,7 +31,21 @@ const Index = () => {
         </Typography>
         <div>
           {/* 投稿データの表示 */}
-          {<PostList posts={posts} />}
+          {<PostList posts={postData.posts} />}
+
+          {/* ローディング表示 */}
+          {hasMore && isLoadingMore && (
+            <CircularProgress
+              sx={{
+                margin: 'auto',
+                display: 'flex',
+                paddingY: 2,
+              }}
+            />
+          )}
+
+          {/* スクロールトリガー */}
+          <div ref={triggerRef} style={{ height: '10px' }} />
         </div>
       </Container>
     </Box>

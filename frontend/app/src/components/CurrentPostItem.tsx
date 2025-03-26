@@ -24,10 +24,11 @@ const CurrentPostItem: React.FC<PostItemProps> = ({ post }) => {
         <div>
           <Typography sx={{ fontSize: 14 }}>{post.content}</Typography>
           <Typography sx={{ fontSize: 12 }}>
-            最終更新：{post.from_today}
+            最終更新：{post.fromToday}
           </Typography>
 
           {/* ↓↓↓ デバッグ用 最後に消す ↓↓↓ */}
+          <Typography sx={{ fontSize: 12 }}>user: {post.user.name}</Typography>
           <Typography sx={{ fontSize: 12 }}>post.id: {post.id}</Typography>
           {/* ↑↑↑ デバッグ用 最後に消す ↑↑↑ */}
         </div>

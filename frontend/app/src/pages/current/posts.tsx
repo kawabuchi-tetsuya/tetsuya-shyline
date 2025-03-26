@@ -1,4 +1,4 @@
-import { Box, Container, Typography } from '@mui/material'
+import { Box, CircularProgress, Container, Typography } from '@mui/material'
 import CurrentPostList from '@/components/CurrentPostList'
 import Loader from '@/components/Loader'
 import { useFetchPosts } from '@/hooks/useFetchPosts'
@@ -11,12 +11,10 @@ const CurrentPosts = () => {
   useRequireSignedIn()
   const [user] = useUserState()
 
-  const { posts, error, loading, loadMorePosts, nextKeyset } = useFetchPosts(
-    user.isSignedIn ? '/current/posts' : '/posts'
-  )
+  const { postData, error, loading, loadMorePosts, isLoadingMore, hasMore } =
+    useFetchPosts('/current/posts')
 
-  const hasMore = nextKeyset !== null
-  useInfiniteScroll(loadMorePosts, hasMore)
+  const { triggerRef } = useInfiniteScroll(loadMorePosts, hasMore)
 
   if (!user.isSignedIn) return <div>サインインが必要です。</div>
   if (error) return <div>エラーが発生しました。</div>
@@ -39,7 +37,21 @@ const CurrentPosts = () => {
         </Typography>
         <div>
           {/* 投稿データの表示 */}
-          {<CurrentPostList posts={posts} />}
+          {<CurrentPostList posts={postData.posts} />}
+
+          {/* ローディング表示 */}
+          {hasMore && isLoadingMore && (
+            <CircularProgress
+              sx={{
+                margin: 'auto',
+                display: 'flex',
+                paddingY: 2,
+              }}
+            />
+          )}
+
+          {/* スクロールトリガー */}
+          <div ref={triggerRef} style={{ height: '10px' }} />
         </div>
       </Container>
     </Box>
