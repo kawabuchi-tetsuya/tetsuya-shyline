@@ -1,6 +1,6 @@
 import axios, { AxiosResponse, AxiosError } from 'axios'
 import { useEffect } from 'react'
-import { useUserState } from '../hooks/useGlobalState'
+import { useUserState } from '@/hooks/useGlobalState'
 
 const CurrentUserFetch = () => {
   const [user, setUser] = useUserState()

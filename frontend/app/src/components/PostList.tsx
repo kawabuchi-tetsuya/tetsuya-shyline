@@ -1,23 +1,23 @@
 // 投稿データを取得して表示するコンポーネント
 import React from 'react'
 import { Grid } from '@mui/material'
-import { Post } from '../types/post'
+import { Post } from '@/types/post'
 import PostItem from './PostItem'
 
 type PostListProps = {
   posts: Post[]
-};
+}
 
 const PostList: React.FC<PostListProps> = ({ posts }) => {
   return (
     <Grid container spacing={3}>
       {posts.map((post) => (
         <Grid item xs={12} key={post.id}>
-          <PostItem post={post} />
+          <PostItem key={`${post.id}`} post={post} />
         </Grid>
       ))}
     </Grid>
-  );
-};
+  )
+}
 
-export default PostList;
+export default PostList

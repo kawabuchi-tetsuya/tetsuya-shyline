@@ -1,10 +1,16 @@
-import { LoadingButton } from '@mui/lab'
-import { Box, Container, TextField, Typography, Stack } from '@mui/material'
+import {
+  Box,
+  Button,
+  Container,
+  TextField,
+  Typography,
+  Stack,
+} from '@mui/material'
 import { useMemo } from 'react'
 import { useForm, SubmitHandler, Controller } from 'react-hook-form'
-import { SignInFormData } from '../types/signInFormData'
-import BoxWithHeader from '../components/BoxWithHeader'
-import { useSignIn } from '../hooks/useSignIn'
+import { SignInFormData } from '@/types/signInFormData'
+import { useSignIn } from '@/hooks/useSignIn'
+import { styles } from '@/styles'
 
 const SignIn = () => {
   const { signIn, isLoading } = useSignIn()
@@ -41,7 +47,7 @@ const SignIn = () => {
   }
 
   return (
-    <BoxWithHeader>
+    <Box sx={styles.pageMinHeight}>
       <Container maxWidth="sm">
         <Box sx={{ mb: 4, pt: 4 }}>
           <Typography component="h2" sx={{ fontSize: 32, fontWeight: 'bold' }}>
@@ -79,17 +85,17 @@ const SignIn = () => {
               />
             )}
           />
-          <LoadingButton
+          <Button
             type="submit"
             variant="contained"
             loading={isLoading}
             sx={{ fontWeight: 'bold', color: 'white' }}
           >
             送信する
-          </LoadingButton>
+          </Button>
         </Stack>
       </Container>
-    </BoxWithHeader>
+    </Box>
   )
 }
 

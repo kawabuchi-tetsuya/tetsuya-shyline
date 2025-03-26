@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useUserState } from '../hooks/useGlobalState'
+import { useUserState } from '@/hooks/useGlobalState'
 
 const SignOut = () => {
   const navigate = useNavigate()

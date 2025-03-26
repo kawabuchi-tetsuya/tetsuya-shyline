@@ -1,5 +1,5 @@
 import useSWR from 'swr'
-import { fetcher } from '../utils/index'
+import { fetcher } from '@/utils/index'
 
 const HealthCheck: React.FC = () => {
   const url = 'http://localhost:3000/api/v1/health_check'

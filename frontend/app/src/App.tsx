@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import CurrentUserFetch from './components/CurrentUserFetch'
 
 // Route
+import CurrentPosts from './pages/current/posts'
 import Home from './pages/home'
 import HealthCheck from './pages/health_check'
 import Index from './pages/index'
@@ -24,6 +25,8 @@ function App() {
       <Routes>
         {/* ホームページ */}
         <Route path="/" element={<Home />} />
+        {/* サインインユーザー投稿一覧 */}
+        <Route path="/current/posts" element={<CurrentPosts />} />
         {/* ヘルスチェック */}
         <Route path="/health-check" element={<HealthCheck />} />{' '}
         {/* 投稿一覧ページ */}

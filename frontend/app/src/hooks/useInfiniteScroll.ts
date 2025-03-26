@@ -1,23 +1,32 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 
 const useInfiniteScroll = (loadMore: () => void, hasMore: boolean) => {
+  const observerRef = useRef<IntersectionObserver | null>(null)
+  const triggerRef = useRef<HTMLDivElement>(null)
+
   useEffect(() => {
-    const handleScroll = () => {
-      if (
-        window.innerHeight + document.documentElement.scrollTop >=
-        document.documentElement.offsetHeight - 200 &&
-        hasMore
-      ){
+    if (!hasMore) return
+
+    observerRef.current = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
         loadMore()
       }
-    }
+    })
 
-    window.addEventListener('scroll', handleScroll)
+    const target = triggerRef.current
+
+    if (target) {
+      observerRef.current.observe(target)
+    }
 
     return () => {
-      window.removeEventListener('scroll', handleScroll)
+      if (observerRef.current && target) {
+        observerRef.current.unobserve(target)
+      }
     }
   }, [loadMore, hasMore])
+
+  return { triggerRef }
 }
 
 export default useInfiniteScroll

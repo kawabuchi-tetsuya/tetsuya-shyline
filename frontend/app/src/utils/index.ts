@@ -1,9 +1,12 @@
-import axios, { AxiosResponse, AxiosError } from 'axios'
+import apiClient from '@/axiosConfig'
+import camelcaseKeys from 'camelcase-keys'
 
-export const fetcher = (url: string) =>
-  axios
-    .get(url)
-    .then((res: AxiosResponse) => res.data)
-    .catch((error: AxiosError) => {
-      throw error
-    })
+export const fetcher = async (url: string) => {
+  try {
+    const response = await apiClient.get(url)
+    return camelcaseKeys(response.data, { deep: true })
+  } catch (error) {
+    console.error('Fetch error:', error)
+    throw error
+  }
+}

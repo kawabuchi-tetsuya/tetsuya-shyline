@@ -1,21 +1,27 @@
 import { Box, CircularProgress, Container, Typography } from '@mui/material'
-import PostList from '@/components/PostList'
+import CurrentPostList from '@/components/CurrentPostList'
 import Loader from '@/components/Loader'
 import { useFetchPosts } from '@/hooks/useFetchPosts'
 import useInfiniteScroll from '@/hooks/useInfiniteScroll'
+import { useRequireSignedIn } from '@/hooks/useRequireSignedIn'
+import { useUserState } from '@/hooks/useGlobalState'
 import { styles } from '@/styles'
 
-const Index = () => {
+const CurrentPosts = () => {
+  useRequireSignedIn()
+  const [user] = useUserState()
+
   const { postData, error, loading, loadMorePosts, isLoadingMore, hasMore } =
-    useFetchPosts('/posts')
+    useFetchPosts('/current/posts')
 
   const { triggerRef } = useInfiniteScroll(loadMorePosts, hasMore)
 
+  if (!user.isSignedIn) return <div>サインインが必要です。</div>
   if (error) return <div>エラーが発生しました。</div>
   if (loading) return <Loader />
 
   return (
-    <Box sx={(styles.pageMinHeight, { backgroundColor: '#E6F2FF' })}>
+    <Box sx={styles.pageMinHeight}>
       <Container maxWidth="md" sx={{ pt: 6 }}>
         <Typography
           component="h1"
@@ -27,11 +33,11 @@ const Index = () => {
             color: 'black',
           }}
         >
-          投稿一覧
+          あなたの投稿一覧
         </Typography>
         <div>
           {/* 投稿データの表示 */}
-          {<PostList posts={postData.posts} />}
+          {<CurrentPostList posts={postData.posts} />}
 
           {/* ローディング表示 */}
           {hasMore && isLoadingMore && (
@@ -52,4 +58,4 @@ const Index = () => {
   )
 }
 
-export default Index
+export default CurrentPosts
