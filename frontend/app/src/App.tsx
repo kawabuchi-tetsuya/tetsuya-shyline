@@ -6,6 +6,7 @@ import CurrentPosts from './pages/current/posts'
 import Home from './pages/home'
 import HealthCheck from './pages/health_check'
 import Index from './pages/index'
+import PostDetail from './pages/posts/[id]'
 import SignIn from './pages/sign_in'
 import SignOut from './pages/sign_out'
 
@@ -31,6 +32,8 @@ function App() {
         <Route path="/health-check" element={<HealthCheck />} />{' '}
         {/* 投稿一覧ページ */}
         <Route path="/posts" element={<Index />} />
+        {/* 投稿詳細ページ */}
+        <Route path="/posts/:id" element={<PostDetail />} />
         {/* サインインページ */}
         <Route path="/sign-in" element={<SignIn />} />
         {/* サインアウトページ */}
