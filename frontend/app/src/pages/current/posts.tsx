@@ -11,14 +11,20 @@ const CurrentPosts = () => {
   useRequireSignedIn()
   const [user] = useUserState()
 
-  const { postData, error, loading, loadMorePosts, isLoadingMore, hasMore } =
-    useFetchPosts('/current/posts')
+  const {
+    postData,
+    error,
+    isInitialLoading,
+    isFetchingMore,
+    loadMorePosts,
+    hasMore,
+  } = useFetchPosts('/current/posts')
 
   const { triggerRef } = useInfiniteScroll(loadMorePosts, hasMore)
 
   if (!user.isSignedIn) return <div>サインインが必要です。</div>
   if (error) return <div>エラーが発生しました。</div>
-  if (loading) return <Loader />
+  if (isInitialLoading) return <Loader />
 
   return (
     <Box sx={styles.pageMinHeight}>
@@ -37,10 +43,10 @@ const CurrentPosts = () => {
         </Typography>
         <div>
           {/* 投稿データの表示 */}
-          {<CurrentPostList posts={postData.posts} />}
+          {<CurrentPostList posts={postData} />}
 
           {/* ローディング表示 */}
-          {hasMore && isLoadingMore && (
+          {hasMore && isFetchingMore && (
             <CircularProgress
               sx={{
                 margin: 'auto',

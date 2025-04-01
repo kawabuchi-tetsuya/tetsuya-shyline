@@ -1,81 +1,55 @@
 // 投稿データを取得するカスタムフック
-import { useState, useReducer } from 'react'
-import useSWR from 'swr'
+import useSWRInfinite from 'swr/infinite'
 import { PostsResponse } from '@/types/postsResponse'
-import { useNextKeyset } from './useNextKeyset'
 import { fetcher } from '@/utils'
-import { LoadingAction } from '@/types/loadingAction'
 
 export const useFetchPosts = (apiPath: string) => {
   const url = import.meta.env.VITE_API_BASE_URL + apiPath
-  const [error, setError] = useState(null)
-  const { data, mutate } = useSWR(url, fetcher, {
-    onError: (err) => setError(err),
-    // ブラウザフォーカス時の自動リフェッチを無効化する
-    revalidateOnFocus: false,
+
+  const getKey = (_pageIndex: number, previousPageData: PostsResponse) => {
+    if (!previousPageData?.meta.nextKeyset) return url
+
+    const params = new URLSearchParams({
+      updated_at: previousPageData.meta.nextKeyset.updatedAt || '',
+      id: previousPageData.meta.nextKeyset.id?.toString() || '',
+    })
+    return `${url}?${params.toString()}`
+  }
+
+  const {
+    data,
+    error: swrError,
+    size,
+    setSize,
+    isValidating,
+    mutate,
+  } = useSWRInfinite(getKey, fetcher, {
+    revalidateOnFocus: false, // ブラウザフォーカス時の自動リフェッチを無効化
+    revalidateIfStale: false, // データ取得から5分経過後の自動リフェッチを無効化
+    revalidateOnReconnect: false, // 再接続時の自動リフェッチを無効化
   })
-  const { nextKeyset } = useNextKeyset(data)
 
-  const [hasMore, setHasMore] = useState(true)
-  const [isLoadingMore, dispatchLoading] = useReducer(
-    (state: boolean, action: LoadingAction) => {
-      switch (action.type) {
-        case 'START_LOADING':
-          return true
-        case 'STOP_LOADING':
-          return false
-        default:
-          return state
-      }
-    },
-    false
-  )
+  const postData = data?.flatMap((page) => page.posts) ?? []
+  const hasMore = data?.[data.length - 1]?.meta?.nextKeyset !== null
+  const isInitialLoading = size === 1 && isValidating
+  const isFetchingMore = size > 1 && isValidating
 
-  const loadMorePosts = async () => {
-    if (isLoadingMore || !nextKeyset || !hasMore) return
+  const refreshPosts = () => {
+    mutate()
+  }
+  const loadMorePosts = () => {
+    if (!hasMore || isValidating) return
 
-    dispatchLoading({ type: 'START_LOADING' })
-
-    try {
-      const params = new URLSearchParams({
-        updated_at: nextKeyset.updatedAt,
-        id: nextKeyset.id.toString(),
-      })
-
-      const moreData = await fetcher(`${apiPath}?${params.toString()}`)
-
-      if (moreData.posts.length === 0) {
-        setHasMore(false)
-        return
-      }
-
-      const updatePosts = (prevData?: PostsResponse) => {
-        const updatedKeyset =
-          moreData.meta.nextKeyset ?? prevData?.meta?.nextKeyset
-
-        return {
-          posts: [...(prevData?.posts || []), ...moreData.posts],
-          meta: { nextKeyset: { ...updatedKeyset } },
-        }
-      }
-
-      mutate(updatePosts, false)
-    } catch (error) {
-      console.error('Error loading more posts:', error)
-    } finally {
-      dispatchLoading({ type: 'STOP_LOADING' })
-    }
+    setSize(size + 1)
   }
 
   return {
-    postData: {
-      posts: data?.posts || [],
-      nextKeyset,
-    },
-    error,
-    loading: !data,
+    postData,
+    error: swrError,
+    isInitialLoading,
+    isFetchingMore,
     loadMorePosts,
-    isLoadingMore,
+    refreshPosts,
     hasMore,
   }
 }

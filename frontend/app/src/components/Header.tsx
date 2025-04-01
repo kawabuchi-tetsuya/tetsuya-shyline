@@ -29,6 +29,10 @@ const Header = () => {
   const handleClose = () => {
     setAnchorEl(null)
   }
+  const handleClickLogo = (event: React.MouseEvent) => {
+    event.preventDefault() // リンクのデフォルトの挙動を無効化
+    window.location.href = '/posts'
+  }
 
   return (
     <AppBar
@@ -49,7 +53,7 @@ const Header = () => {
           }}
         >
           <Box>
-            <Link to="/posts">
+            <Link to="/posts" onClick={handleClickLogo}>
               <img src="/logo.png" alt="logo" width={150} height={40} />
             </Link>
           </Box>

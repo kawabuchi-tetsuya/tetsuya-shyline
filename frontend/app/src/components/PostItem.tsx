@@ -8,8 +8,13 @@ type PostItemProps = {
 }
 
 const PostItem: React.FC<PostItemProps> = ({ post }) => {
+  // 投稿クリック時にscrollPosition をセッションストレージに保存
+  const handleClick = () => {
+    sessionStorage.setItem('scrollPosition', window.scrollY.toString())
+  }
+
   return (
-    <Link to={`/posts/${post.id}`}>
+    <Link to={`/posts/${post.id}`} onClick={handleClick}>
       <Card>
         <CardContent>
           <Typography

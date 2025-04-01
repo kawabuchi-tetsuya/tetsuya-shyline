@@ -5,15 +5,23 @@ import Loader from '@/components/Loader'
 import { useFetchPosts } from '@/hooks/useFetchPosts'
 import useInfiniteScroll from '@/hooks/useInfiniteScroll'
 import { styles } from '@/styles'
+import useSavedScrollPosition from '@/hooks/useSavedScrollPosition'
 
 const Index = () => {
-  const { postData, error, loading, loadMorePosts, isLoadingMore, hasMore } =
-    useFetchPosts('/posts')
+  const {
+    postData,
+    error,
+    isInitialLoading,
+    isFetchingMore,
+    loadMorePosts,
+    hasMore,
+  } = useFetchPosts('/posts')
 
   const { triggerRef } = useInfiniteScroll(loadMorePosts, hasMore)
+  useSavedScrollPosition(isInitialLoading, isFetchingMore)
 
   if (error) return <Error />
-  if (loading) return <Loader />
+  if (isInitialLoading) return <Loader />
 
   return (
     <Box sx={(styles.pageMinHeight, { backgroundColor: '#E6F2FF' })}>
@@ -32,10 +40,10 @@ const Index = () => {
         </Typography>
         <div>
           {/* 投稿データの表示 */}
-          {<PostList posts={postData.posts} />}
+          {<PostList posts={postData} />}
 
           {/* ローディング表示 */}
-          {hasMore && isLoadingMore && (
+          {hasMore && isFetchingMore && (
             <CircularProgress
               sx={{
                 margin: 'auto',
