@@ -13,7 +13,7 @@ const PostList: React.FC<PostListProps> = ({ posts }) => {
     <Grid container spacing={3}>
       {posts.map((post) => (
         <Grid item xs={12} key={post.id}>
-          <PostItem key={`${post.id}`} post={post} />
+          <PostItem post={post} />
         </Grid>
       ))}
     </Grid>

@@ -1,5 +1,6 @@
 import { Box, CircularProgress, Container, Typography } from '@mui/material'
 import PostList from '@/components/PostList'
+import Error from '@/components/Error'
 import Loader from '@/components/Loader'
 import { useFetchPosts } from '@/hooks/useFetchPosts'
 import useInfiniteScroll from '@/hooks/useInfiniteScroll'
@@ -11,7 +12,7 @@ const Index = () => {
 
   const { triggerRef } = useInfiniteScroll(loadMorePosts, hasMore)
 
-  if (error) return <div>エラーが発生しました。</div>
+  if (error) return <Error />
   if (loading) return <Loader />
 
   return (
