@@ -4,12 +4,21 @@ import EditIcon from '@mui/icons-material/Edit'
 import { Avatar, Box, IconButton, Tooltip, Typography } from '@mui/material'
 import React from 'react'
 import { Post } from '@/types/post'
+import { Link } from 'react-router-dom'
 
 type PostItemProps = {
   post: Post
 }
 
 const CurrentPostItem: React.FC<PostItemProps> = ({ post }) => {
+  // 投稿クリック時にscrollPosition をセッションストレージに保存
+  const handleClick = () => {
+    sessionStorage.setItem(
+      'scrollPositionCurrentPosts',
+      window.scrollY.toString()
+    )
+  }
+
   return (
     <Box
       sx={{
@@ -90,9 +99,11 @@ const CurrentPostItem: React.FC<PostItemProps> = ({ post }) => {
         <Box>
           <Avatar>
             <Tooltip title="表示を確認">
-              <IconButton sx={{ backgroundColor: '#F1F5FA' }}>
-                <ChevronRightIcon sx={{ color: '#99AAB6' }} />
-              </IconButton>
+              <Link to={`/current/posts/${post.id}`} onClick={handleClick}>
+                <IconButton sx={{ backgroundColor: '#F1F5FA' }}>
+                  <ChevronRightIcon sx={{ color: '#99AAB6' }} />
+                </IconButton>
+              </Link>
             </Tooltip>
           </Avatar>
         </Box>

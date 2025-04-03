@@ -29,9 +29,17 @@ const Header = () => {
   const handleClose = () => {
     setAnchorEl(null)
   }
+
+  // ロゴクリック時、投稿一覧をフルリロードする
   const handleClickLogo = (event: React.MouseEvent) => {
     event.preventDefault() // リンクのデフォルトの挙動を無効化
     window.location.href = '/posts'
+  }
+
+  // アイコンクリック時、サインインユーザーの投稿一覧をフルリロードする
+  const handleClickCurrentPosts = (event: React.MouseEvent) => {
+    event.preventDefault() // リンクのデフォルトの挙動を無効化
+    window.location.href = '/current/posts'
   }
 
   return (
@@ -131,7 +139,11 @@ const Header = () => {
                       </Typography>
                     </Box>
                     <Divider />
-                    <MenuItem component={Link} to="/current/posts">
+                    <MenuItem
+                      component={Link}
+                      to="/current/posts"
+                      onClick={handleClickCurrentPosts}
+                    >
                       <ListItemIcon>
                         <ArticleIcon fontSize="small" />
                       </ListItemIcon>

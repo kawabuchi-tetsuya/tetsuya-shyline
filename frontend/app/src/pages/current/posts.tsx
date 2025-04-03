@@ -1,8 +1,10 @@
 import { Box, CircularProgress, Container, Typography } from '@mui/material'
 import CurrentPostList from '@/components/CurrentPostList'
+import Error from '@/components/Error'
 import Loader from '@/components/Loader'
 import { useFetchPosts } from '@/hooks/useFetchPosts'
 import useInfiniteScroll from '@/hooks/useInfiniteScroll'
+import useSavedScrollPosition from '@/hooks/useSavedScrollPosition'
 import { useRequireSignedIn } from '@/hooks/useRequireSignedIn'
 import { useUserState } from '@/hooks/useGlobalState'
 import { styles } from '@/styles'
@@ -10,6 +12,7 @@ import { styles } from '@/styles'
 const CurrentPosts = () => {
   useRequireSignedIn()
   const [user] = useUserState()
+  const apiPath = user.isSignedIn ? '/current/posts' : '/posts'
 
   const {
     postData,
@@ -18,12 +21,16 @@ const CurrentPosts = () => {
     isFetchingMore,
     loadMorePosts,
     hasMore,
-  } = useFetchPosts('/current/posts')
+  } = useFetchPosts(apiPath)
 
   const { triggerRef } = useInfiniteScroll(loadMorePosts, hasMore)
+  useSavedScrollPosition(
+    isInitialLoading,
+    isFetchingMore,
+    'scrollPositionCurrentPosts'
+  )
 
-  if (!user.isSignedIn) return <div>サインインが必要です。</div>
-  if (error) return <div>エラーが発生しました。</div>
+  if (error) return <Error />
   if (isInitialLoading) return <Loader />
 
   return (

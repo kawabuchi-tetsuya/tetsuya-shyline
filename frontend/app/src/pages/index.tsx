@@ -18,7 +18,11 @@ const Index = () => {
   } = useFetchPosts('/posts')
 
   const { triggerRef } = useInfiniteScroll(loadMorePosts, hasMore)
-  useSavedScrollPosition(isInitialLoading, isFetchingMore)
+  useSavedScrollPosition(
+    isInitialLoading,
+    isFetchingMore,
+    'scrollPositionPosts'
+  )
 
   if (error) return <Error />
   if (isInitialLoading) return <Loader />

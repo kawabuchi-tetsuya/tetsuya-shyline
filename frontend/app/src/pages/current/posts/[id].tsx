@@ -1,15 +1,27 @@
+import { Settings } from '@mui/icons-material'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
-import { Avatar, Box, Container, IconButton, Tooltip } from '@mui/material'
+import {
+  Avatar,
+  Box,
+  Container,
+  IconButton,
+  Tooltip,
+  Typography,
+} from '@mui/material'
+import { styles } from '@/styles'
 import Error from '@/components/Error'
-import PostDetailItem from '@/components/PostDetailItem'
 import Loader from '@/components/Loader'
 import { useFetchPostDetail } from '@/hooks/useFetchPostDetail'
-import { styles } from '@/styles'
+import { useRequireSignedIn } from '@/hooks/useRequireSignedIn'
+import { useUserState } from '@/hooks/useGlobalState'
 import { Link, useParams } from 'react-router-dom'
+import PostDetailItem from '@/components/PostDetailItem'
 
-const PostDetail = () => {
+const CurrentPostDetail = () => {
+  useRequireSignedIn()
+  const [user] = useUserState()
   const { id } = useParams<{ id: string }>()
-  const apiPath = `/posts/${id?.toString()}`
+  const apiPath = user.isSignedIn ? `/current/posts/${id?.toString()}` : null
   const { post, loading, error } = useFetchPostDetail(apiPath)
 
   if (error) return <Error />
@@ -35,9 +47,9 @@ const PostDetail = () => {
           }}
         >
           <Box sx={{ flexGrow: 1 }}>
-            <Link to="/posts">
+            <Link to="/current/posts">
               <Avatar>
-                <Tooltip title="投稿一覧に戻る">
+                <Tooltip title="投稿の管理に戻る">
                   <IconButton sx={{ backgroundColor: '#F1F5FA' }}>
                     <ChevronLeftIcon sx={{ color: '#99AAB6' }} />
                   </IconButton>
@@ -45,14 +57,21 @@ const PostDetail = () => {
               </Avatar>
             </Link>
           </Box>
-          <Box sx={{ flexGrow: 1 }} />
+          <Box sx={{ flexGrow: 1, textAlign: 'center' }}>
+            <Settings />
+            <Typography
+              component="p"
+              sx={{ display: 'inline-block', fontSize: { xs: 14, sm: 16 } }}
+            >
+              ステータス： {post?.status}
+            </Typography>
+          </Box>
           <Box sx={{ flexGrow: 1 }} />
         </Container>
       </Box>
-      {/* 投稿データの表示 */}
       <PostDetailItem key={`${post?.id}`} post={post} />
     </Box>
   )
 }
 
-export default PostDetail
+export default CurrentPostDetail
