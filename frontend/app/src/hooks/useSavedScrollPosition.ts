@@ -2,21 +2,22 @@ import { useEffect } from 'react'
 
 const useSavedScrollPosition = (
   isInitialLoading: boolean,
-  isFetchingMore: boolean
+  isFetchingMore: boolean,
+  keyName: string
 ) => {
   useEffect(() => {
     if (isInitialLoading) {
-      sessionStorage.removeItem('scrollPosition')
+      sessionStorage.removeItem(keyName)
       return
     }
     if (isFetchingMore) return
 
-    const savedScrollPosition = sessionStorage.getItem('scrollPosition')
+    const savedScrollPosition = sessionStorage.getItem(keyName)
     if (savedScrollPosition) {
       window.scrollTo(0, parseInt(savedScrollPosition))
-      sessionStorage.removeItem('scrollPosition')
+      sessionStorage.removeItem(keyName)
     }
-  }, [isInitialLoading, isFetchingMore])
+  }, [isInitialLoading, isFetchingMore, keyName])
 }
 
 export default useSavedScrollPosition

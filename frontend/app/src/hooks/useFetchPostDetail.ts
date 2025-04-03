@@ -1,20 +1,18 @@
 import { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
 import { fetcher } from '@/utils'
 import { Post } from '@/types/post'
 
-export const useFetchPostDetail = (apiPath: string) => {
-  const { id } = useParams<{ id: string }>()
+export const useFetchPostDetail = (apiPath: string | null) => {
   const [post, setPost] = useState<Post | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    if (!id) return
+    if (!apiPath) return
 
     const fetchPostDetail = async () => {
       try {
-        const data = await fetcher(`${apiPath}/${id.toString()}`)
+        const data = await fetcher(apiPath)
         setPost(data)
       } catch (error) {
         console.error('Error loading post detail:', error)
@@ -25,7 +23,7 @@ export const useFetchPostDetail = (apiPath: string) => {
     }
 
     fetchPostDetail()
-  }, [apiPath, id])
+  }, [apiPath])
 
   return { post, loading, error }
 }

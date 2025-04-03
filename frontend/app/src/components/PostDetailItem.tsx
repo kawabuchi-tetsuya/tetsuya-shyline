@@ -1,6 +1,17 @@
 // 投稿詳細を表示するコンポーネント
-import { Box, Card, CardContent, Typography } from '@mui/material'
+import { Update } from '@mui/icons-material'
+import ArticleIcon from '@mui/icons-material/Article'
+import {
+  Box,
+  Card,
+  Container,
+  List,
+  ListItem,
+  ListItemText,
+  Typography,
+} from '@mui/material'
 import { Post } from '@/types/post'
+import DebugPostDetail from './DebugPostDetail'
 
 type PostDetailProps = {
   post: Post | null
@@ -10,40 +21,96 @@ const PostDetailItem: React.FC<PostDetailProps> = ({ post }) => {
   if (!post) return <p>投稿が見つかりませんでした</p>
 
   return (
-    <Card>
-      <CardContent>
-        <Typography
-          component={'h3'}
+    <Container maxWidth="lg">
+      <Box sx={{ pt: 6, pb: 3 }}>
+        <Box
           sx={{
-            mb: 2,
-            minHeight: 20,
-            fontSize: 16,
-            fontWeight: 'bold',
-            lineHeight: 1.5,
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0 8px',
+            m: 'auto',
           }}
         >
-          {post.user.name}
-        </Typography>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-          <div className="border p-4 mb-2 rounded shadow">
-            <Typography sx={{ fontSize: 14 }}>{post.content}</Typography>
-            <Typography sx={{ fontSize: 12 }}>
-              初回投稿：{post.createdAt}
+          <Box sx={{ textAlign: 'center', width: '100%' }}>
+            <Typography
+              component="h2"
+              sx={{
+                fontSize: { xs: 21, sm: 25 },
+                fontWeight: 'bold',
+                lineHeight: '40px',
+              }}
+            >
+              {post?.user.name} さんの投稿
             </Typography>
-            <Typography sx={{ fontSize: 12 }}>
-              最終更新：{post.fromToday}
-            </Typography>
-
-            {/* ↓↓↓ デバッグ用 最後に消す ↓↓↓ */}
-            <Typography sx={{ fontSize: 12 }}>post.id: {post.id}</Typography>
-            <Typography sx={{ fontSize: 12 }}>
-              post.status: {post.status}
-            </Typography>
-            {/* ↑↑↑ デバッグ用 最後に消す ↑↑↑ */}
-          </div>
+          </Box>
         </Box>
-      </CardContent>
-    </Card>
+      </Box>
+      <Box sx={{ display: 'flex', gap: '0 24px' }}>
+        <Box sx={{ width: '100%' }}>
+          <Card
+            sx={{
+              backShadow: 'none',
+              borderRadius: '12px',
+              maxWidth: 840,
+              m: '0 auto',
+            }}
+          >
+            <Box
+              sx={{
+                p: 3,
+              }}
+            >
+              <p>{post?.content}</p>
+            </Box>
+            <List sx={{ color: '#6E7B85' }}>
+              <ListItem divider>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    width: '100%',
+                  }}
+                >
+                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                    <Box sx={{ pr: 1 }}>
+                      <ArticleIcon />
+                    </Box>
+                    <ListItemText primary="初回投稿" />
+                  </Box>
+                  <Box>
+                    <ListItemText primary={post?.createdAt} />
+                  </Box>
+                </Box>
+              </ListItem>
+              <ListItem>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    width: '100%',
+                  }}
+                >
+                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                    <Box sx={{ pr: 1 }}>
+                      <Update />
+                    </Box>
+                    <ListItemText primary="最終更新" />
+                  </Box>
+                  <Box>
+                    <ListItemText primary={post?.fromToday} />
+                  </Box>
+                </Box>
+              </ListItem>
+            </List>
+          </Card>
+        </Box>
+      </Box>
+      {/* ↓↓↓ デバッグ用 最後に消す ↓↓↓ */}
+      <DebugPostDetail post={post} />
+      {/* ↑↑↑ デバッグ用 最後に消す ↑↑↑ */}
+    </Container>
   )
 }
 

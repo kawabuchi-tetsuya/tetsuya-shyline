@@ -11,6 +11,8 @@ module Api
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 8.0
 
+    config.active_record.default_timezone = :local
+
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
     # Common ones are `templates`, `generators`, or `middleware`, for example.
@@ -45,5 +47,7 @@ module Api
 
     config.i18n.default_locale = :ja
     config.i18n.load_path += Dir[Rails.root.join('config/locales/**/*.yml').to_s]
+
+    config.time_zone = 'Asia/Tokyo'
   end
 end
