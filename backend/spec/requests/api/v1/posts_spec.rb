@@ -20,7 +20,7 @@ RSpec.describe 'Api::V1::Posts', type: :request do
 
         aggregate_failures do
           expect(res.keys).to eq ['posts', 'meta']
-          expect(res['posts'][0].keys).to eq ['id', 'content', 'status', 'created_at', 'from_today', 'user']
+          expect(res['posts'][0].keys).to eq ['id', 'content', 'status', 'created_at', 'created_at_from_today', 'updated_at', 'updated_at_from_today', 'user']
           expect(res['posts'][0]['user'].keys).to eq ['name']
           expect(res['meta'].keys).to eq ['next_keyset']
           expect(res['meta']['next_keyset'].keys).to eq ['updated_at', 'id']
@@ -63,7 +63,7 @@ RSpec.describe 'Api::V1::Posts', type: :request do
 
         aggregate_failures do
           expect(res.keys).to eq ['posts', 'meta']
-          expect(res['posts'][0].keys).to eq ['id', 'content', 'status', 'created_at', 'from_today', 'user']
+          expect(res['posts'][0].keys).to eq ['id', 'content', 'status', 'created_at', 'created_at_from_today', 'updated_at', 'updated_at_from_today', 'user']
           expect(res['posts'][0]['user'].keys).to eq ['name']
           expect(res['meta'].keys).to eq ['next_keyset']
           expect(res['meta']['next_keyset'].keys).to eq ['updated_at', 'id']
@@ -143,7 +143,7 @@ RSpec.describe 'Api::V1::Posts', type: :request do
 
           aggregate_failures do
             expect(response).to have_http_status(:success)
-            expect(res.keys).to eq ['id', 'content', 'status', 'created_at', 'from_today', 'user']
+            expect(res.keys).to eq ['id', 'content', 'status', 'created_at', 'created_at_from_today', 'updated_at', 'updated_at_from_today', 'user']
             expect(res['user'].keys).to eq ['name']
           end
         end

@@ -31,9 +31,17 @@ const CurrentPostItem: React.FC<PostItemProps> = ({ post }) => {
     >
       <Box sx={{ width: 'auto', pr: 3 }}>
         <div>
-          <Typography sx={{ fontSize: 14 }}>{post.content}</Typography>
+          <Typography
+            sx={{
+              fontSize: 14,
+              whiteSpace: 'pre-wrap',
+              wordBreak: 'break-word',
+            }}
+          >
+            {post.content}
+          </Typography>
           <Typography sx={{ fontSize: 12 }}>
-            最終更新：{post.fromToday}
+            最終更新：{post.updatedAtFromToday}
           </Typography>
 
           {/* ↓↓↓ デバッグ用 最後に消す ↓↓↓ */}
@@ -90,9 +98,11 @@ const CurrentPostItem: React.FC<PostItemProps> = ({ post }) => {
         <Box>
           <Avatar>
             <Tooltip title="編集する">
-              <IconButton sx={{ backgroundColor: '#F1F5FA' }}>
-                <EditIcon sx={{ color: '#99AAB6' }} />
-              </IconButton>
+              <Link to={`/current/posts/edit/${post.id}`} onClick={handleClick}>
+                <IconButton sx={{ backgroundColor: '#F1F5FA' }}>
+                  <EditIcon sx={{ color: '#99AAB6' }} />
+                </IconButton>
+              </Link>
             </Tooltip>
           </Avatar>
         </Box>
