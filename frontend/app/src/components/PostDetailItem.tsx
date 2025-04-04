@@ -20,6 +20,11 @@ type PostDetailProps = {
 const PostDetailItem: React.FC<PostDetailProps> = ({ post }) => {
   if (!post) return <p>投稿が見つかりませんでした</p>
 
+  const primaryTextStyle = {
+    fontSize: { xs: 12, sm: 14 },
+    color: 'inherit',
+  }
+
   return (
     <Container maxWidth="lg">
       <Box sx={{ pt: 6, pb: 3 }}>
@@ -60,7 +65,15 @@ const PostDetailItem: React.FC<PostDetailProps> = ({ post }) => {
                 p: 3,
               }}
             >
-              <p>{post?.content}</p>
+              <Typography
+                sx={{
+                  fontSize: 14,
+                  whiteSpace: 'pre-wrap',
+                  wordBreak: 'break-word',
+                }}
+              >
+                {post?.content}
+              </Typography>
             </Box>
             <List sx={{ color: '#6E7B85' }}>
               <ListItem divider>
@@ -76,10 +89,16 @@ const PostDetailItem: React.FC<PostDetailProps> = ({ post }) => {
                     <Box sx={{ pr: 1 }}>
                       <ArticleIcon />
                     </Box>
-                    <ListItemText primary="初回投稿" />
+                    <ListItemText
+                      primary="初回投稿"
+                      primaryTypographyProps={primaryTextStyle}
+                    />
                   </Box>
                   <Box>
-                    <ListItemText primary={post?.createdAt} />
+                    <ListItemText
+                      primary={`${post?.createdAt} (${post?.createdAtFromToday})`}
+                      primaryTypographyProps={primaryTextStyle}
+                    />
                   </Box>
                 </Box>
               </ListItem>
@@ -96,10 +115,16 @@ const PostDetailItem: React.FC<PostDetailProps> = ({ post }) => {
                     <Box sx={{ pr: 1 }}>
                       <Update />
                     </Box>
-                    <ListItemText primary="最終更新" />
+                    <ListItemText
+                      primary="最終更新"
+                      primaryTypographyProps={primaryTextStyle}
+                    />
                   </Box>
                   <Box>
-                    <ListItemText primary={post?.fromToday} />
+                    <ListItemText
+                      primary={`${post?.updatedAt} (${post?.updatedAtFromToday})`}
+                      primaryTypographyProps={primaryTextStyle}
+                    />
                   </Box>
                 </Box>
               </ListItem>

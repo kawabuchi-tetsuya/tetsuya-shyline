@@ -14,14 +14,37 @@ import {
   MenuItem,
   Typography,
 } from '@mui/material'
+import axios, { AxiosError, AxiosResponse } from 'axios'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useUserState } from '../hooks/useGlobalState'
+import { useUserState } from '@/hooks/useGlobalState'
+import { getAuthHeaders } from '@/utils/auth'
 
 const Header = () => {
   const [user] = useUserState()
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
+
+  // ヘッダを非表示にするパス
+  const hideHeaderPathnames = ['/current/posts/edit/[id]']
+
+  if (hideHeaderPathnames.includes(window.location.pathname)) {
+    return <></>
+  }
+
+  const addNewPost = () => {
+    const url = `${import.meta.env.VITE_API_BASE_URL}/current/posts`
+
+    const headers = getAuthHeaders()
+
+    axios({ method: 'POST', url: url, headers: headers })
+      .then((res: AxiosResponse) => {
+        window.location.href = `/current/posts/edit/${res.data.id}`
+      })
+      .catch((e: AxiosError<{ error: string }>) => {
+        console.log(e.message)
+      })
+  }
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget)
@@ -114,6 +137,7 @@ const Header = () => {
                   <Box sx={{ ml: 2 }}>
                     <Button
                       color="primary"
+                      onClick={addNewPost}
                       variant="contained"
                       sx={{
                         textTransform: 'none',

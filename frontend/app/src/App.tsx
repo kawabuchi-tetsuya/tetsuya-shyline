@@ -4,6 +4,7 @@ import CurrentUserFetch from './components/CurrentUserFetch'
 // Route
 import CurrentPosts from './pages/current/posts'
 import CurrentPostDetail from './pages/current/posts/[id]'
+import CurrentPostsEdit from './pages/current/posts/edit/[id]'
 import Home from './pages/home'
 import HealthCheck from './pages/health_check'
 import Index from './pages/index'
@@ -31,6 +32,8 @@ function App() {
         <Route path="/current/posts" element={<CurrentPosts />} />
         {/* サインインユーザー投稿詳細 */}
         <Route path="/current/posts/:id" element={<CurrentPostDetail />} />
+        {/* サインインユーザー投稿編集 */}
+        <Route path="/current/posts/edit/:id" element={<CurrentPostsEdit />} />
         {/* ヘルスチェック */}
         <Route path="/health-check" element={<HealthCheck />} />{' '}
         {/* 投稿一覧ページ */}

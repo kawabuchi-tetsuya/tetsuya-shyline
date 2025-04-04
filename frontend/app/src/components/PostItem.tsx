@@ -31,9 +31,17 @@ const PostItem: React.FC<PostItemProps> = ({ post }) => {
           </Typography>
           <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
             <div className="border p-4 mb-2 rounded shadow">
-              <Typography sx={{ fontSize: 14 }}>{post.content}</Typography>
+              <Typography
+                sx={{
+                  fontSize: 14,
+                  whiteSpace: 'pre-wrap',
+                  wordBreak: 'break-word',
+                }}
+              >
+                {post.content}
+              </Typography>
               <Typography sx={{ fontSize: 12 }}>
-                最終更新：{post.fromToday}
+                最終更新：{post.updatedAtFromToday}
               </Typography>
 
               {/* ↓↓↓ デバッグ用 最後に消す ↓↓↓ */}

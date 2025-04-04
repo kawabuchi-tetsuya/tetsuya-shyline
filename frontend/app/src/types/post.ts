@@ -3,6 +3,8 @@ export type Post = {
   content: string
   status: string
   createdAt: string
-  fromToday: string
+  createdAtFromToday: string
+  updatedAt: string
+  updatedAtFromToday: string
   user: { name: string }
 }
