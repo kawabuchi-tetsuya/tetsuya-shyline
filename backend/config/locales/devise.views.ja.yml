@@ -15,6 +15,8 @@ ja:
         last_sign_in_at: 最終ログイン時刻
         last_sign_in_ip: 最終ログインIPアドレス
         locked_at: ロック時刻
+        name: user_name
+        nickname: ユーザー名
         password: パスワード
         password_confirmation: パスワード（確認用）
         remember_created_at: ログイン記憶時刻
@@ -141,3 +143,10 @@ ja:
       not_saved:
         one: エラーが発生したため %{resource} は保存されませんでした。
         other: "%{count} 件のエラーが発生したため %{resource} は保存されませんでした。"
+    models:
+      user:
+        attributes:
+          name:
+            blank: "を入力してください"
+            taken: "はすでに使用されています"
+            invalid: "は英数字とアンダースコア(_)のみ使用できます"

@@ -28,7 +28,7 @@ const Index = () => {
   if (isInitialLoading) return <Loader />
 
   return (
-    <Box sx={(styles.pageMinHeight, { backgroundColor: '#E6F2FF' })}>
+    <Box sx={{ ...styles.pageMinHeight, backgroundColor: '#E6F2FF' }}>
       <Container maxWidth="md" sx={{ pt: 6 }}>
         <Typography
           component="h1"

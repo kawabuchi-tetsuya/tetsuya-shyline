@@ -6,13 +6,15 @@ Faker::Config.random = Random.new(FAKER_RANDOM_NUM)
 
 users = []
 USERS_COUNT.times do |i|
-  name = "ユーザー#{i + 1}"
-  uid = "user#{i + 1}"
+  name = "user#{i + 1}_#{Faker::Internet.username(specifier: 5..10, separators: ['_'])}"
+  nickname = "ユーザー#{i + 1}"
   email = "user#{i + 1}@example.com"
+  uid = "user#{i + 1}@example.com"
+  provider = 'email'
   password = 'p@ssw0rd'
   confirmed_at = Time.current
 
-  users << User.new(name:, uid:, email:, password:, confirmed_at:)
+  users << User.new(name:, nickname:, email:, uid:, provider:, password:, confirmed_at:)
 end
 
 User.import users

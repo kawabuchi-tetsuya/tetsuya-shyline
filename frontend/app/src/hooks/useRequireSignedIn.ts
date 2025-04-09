@@ -12,9 +12,9 @@ export function useRequireSignedIn() {
       setSnackbar({
         message: 'サインインしてください',
         severity: 'error',
-        pathname: '/sign-in',
+        pathname: '/sign_in',
       })
-      navigate('/sign-in')
+      navigate('/sign_in')
     }
   }, [user, navigate, setSnackbar])
 }

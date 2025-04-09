@@ -95,7 +95,7 @@ const Header = () => {
                 <Box>
                   <Button
                     component={Link}
-                    to="/sign-in"
+                    to="/sign_in"
                     color="primary"
                     variant="contained"
                     sx={{
@@ -110,7 +110,7 @@ const Header = () => {
                   </Button>
                   <Button
                     component={Link}
-                    to="/sign-up"
+                    to="/sign_up"
                     color="primary"
                     variant="outlined"
                     sx={{
@@ -173,7 +173,7 @@ const Header = () => {
                       </ListItemIcon>
                       投稿の管理
                     </MenuItem>
-                    <MenuItem component={Link} to="/sign-out">
+                    <MenuItem component={Link} to="/sign_out">
                       <ListItemIcon>
                         <Logout fontSize="small" />
                       </ListItemIcon>

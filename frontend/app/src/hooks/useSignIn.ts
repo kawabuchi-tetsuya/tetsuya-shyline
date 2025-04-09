@@ -34,11 +34,11 @@ export const useSignIn = () => {
       })
       navigate('/posts')
     } catch (error) {
-      console.error('Sign-in error:', error)
+      console.error('Sign_in error:', error)
       setSnackbar({
         message: '登録ユーザーが見つかりません',
         severity: 'error',
-        pathname: '/sign-in',
+        pathname: '/sign_in',
       })
     } finally {
       setIsLoading(false)
