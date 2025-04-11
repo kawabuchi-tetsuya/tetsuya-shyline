@@ -12,19 +12,20 @@ import PostDetail from './pages/posts/[id]'
 import SignIn from './pages/sign_in'
 import SignOut from './pages/sign_out'
 import SignUp from './pages/sign_up'
+import SignUpComplete from './pages/sign_up/complete'
 
 // ヘッダー
 import Header from './components/Header'
 
 // 通知バー
-import Snackbar from './components/Snackbar'
+import SnackbarItem from './components/SnackbarItem'
 
 function App() {
   return (
     <Router>
       <CurrentUserFetch />
       <Header />
-      <Snackbar />
+      <SnackbarItem />
 
       <Routes>
         {/* ホームページ */}
@@ -47,6 +48,8 @@ function App() {
         <Route path="/sign_out" element={<SignOut />} />
         {/* サインアップページ */}
         <Route path="/sign_up" element={<SignUp />} />
+        {/* サインアップ完了ページ */}
+        <Route path="/sign_up/complete" element={<SignUpComplete />} />
       </Routes>
     </Router>
   )

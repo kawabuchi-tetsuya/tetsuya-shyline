@@ -35,6 +35,7 @@ ActiveRecord::Schema[8.0].define(version: 0) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string "unconfirmed_email"
+    t.datetime "last_confirmation_sent_at"
     t.string "name", null: false
     t.string "nickname", null: false
     t.string "image"

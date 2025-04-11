@@ -67,13 +67,14 @@ const SignUpForm = () => {
       )
       localStorage.setItem('client', response.headers['client'] || '')
       localStorage.setItem('uid', response.headers['uid'] || '')
+      localStorage.setItem('signupEmail', data.email || '')
 
       setSnackbarState({
         message: '認証メールをご確認ください',
         severity: 'success',
-        pathname: '/posts',
+        pathname: '/sign_up/complete',
       })
-      window.location.href = '/posts'
+      window.location.href = '/sign_up/complete'
     } catch (error) {
       handleError(error as AxiosError<SignUpErrorResponse>)
     } finally {
