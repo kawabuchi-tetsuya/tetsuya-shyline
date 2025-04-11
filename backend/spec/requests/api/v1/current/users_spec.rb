@@ -10,7 +10,7 @@ RSpec.describe 'Api::V1::Current::Users', type: :request do
         subject
         res = response.parsed_body
         aggregate_failures do
-          expect(res.keys).to eq ['id', 'name', 'email']
+          expect(res.keys).to eq ['id', 'name', 'nickname', 'email']
           expect(response).to have_http_status(:success)
         end
       end

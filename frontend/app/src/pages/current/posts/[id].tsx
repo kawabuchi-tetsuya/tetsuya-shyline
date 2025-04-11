@@ -28,7 +28,7 @@ const CurrentPostDetail = () => {
   if (loading) return <Loader />
 
   return (
-    <Box sx={(styles.pageMinHeight, { backgroundColor: '#EDF2F7', pb: 6 })}>
+    <Box sx={{ ...styles.pageMinHeight, backgroundColor: '#EDF2F7', pb: 6 }}>
       <Box
         sx={{
           display: 'block',

@@ -2,7 +2,7 @@ import { Snackbar, Alert } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { useSnackbarState } from '@/hooks/useGlobalState'
 
-const SuccessSnackbar = () => {
+const SnackbarItem = () => {
   const [snackbar, setSnackbar] = useSnackbarState()
   const [open, setOpen] = useState(false)
 
@@ -30,7 +30,7 @@ const SuccessSnackbar = () => {
   return (
     <>
       {snackbar.severity != null && (
-        <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
+        <Snackbar open={open} autoHideDuration={5000} onClose={handleClose}>
           <Alert
             onClose={handleClose}
             severity={snackbar.severity}
@@ -44,4 +44,4 @@ const SuccessSnackbar = () => {
   )
 }
 
-export default SuccessSnackbar
+export default SnackbarItem

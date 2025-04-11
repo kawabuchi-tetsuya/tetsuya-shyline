@@ -35,16 +35,18 @@ ActiveRecord::Schema[8.0].define(version: 0) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string "unconfirmed_email"
-    t.string "name"
-    t.string "nickname"
+    t.datetime "last_confirmation_sent_at"
+    t.string "name", null: false
+    t.string "nickname", null: false
     t.string "image"
-    t.string "email"
+    t.string "email", null: false
     t.text "tokens"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["name", "uid"], name: "index_users_on_name_and_uid"
+    t.index ["name"], name: "index_users_on_name", unique: true
+    t.index ["nickname"], name: "index_users_on_nickname"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
