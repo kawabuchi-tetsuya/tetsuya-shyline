@@ -71,8 +71,6 @@ group :development, :test do
   # デバッグツール pryコンソールを使えるようにする
   # [https://github.com/deivid-rodriguez/pry-byebug]
   gem 'pry-byebug'
-  # [https://github.com/pry/pry-doc]
-  gem 'pry-doc'
   # [https://github.com/pry/pry-rails]
   gem 'pry-rails'
 
@@ -81,20 +79,6 @@ group :development, :test do
 
   # https://github.com/rspec/rspec-rails
   gem 'rspec-rails'
-
-  # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
-  gem 'rubocop-rails-omakase', require: false
-
-  # [https://matchers.shoulda.io/docs/v5.3.0/]
-  gem 'shoulda-matchers', '~> 5.0'
-end
-
-group :development do
-  # bulk insert[https://github.com/zdennis/activerecord-import]
-  gem 'activerecord-import'
-
-  # N+1問題を検知する [https://github.com/flyerhzm/bullet]
-  gem 'bullet'
 
   # rubocop
   # https://github.com/rubocop/rubocop
@@ -106,9 +90,26 @@ group :development do
   # https://github.com/rubocop/rubocop-rails
   gem 'rubocop-rails', require: false
 
+  # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
+  gem 'rubocop-rails-omakase', require: false
+
   # https://github.com/rubocop/rubocop-rspec
   gem 'rubocop-rspec', require: false
 
+  # [https://matchers.shoulda.io/docs/v5.3.0/]
+  gem 'shoulda-matchers', '~> 5.0'
+
   # RSpec実行高速化[https://github.com/jonleighton/spring-commands-rspec]
   gem 'spring-commands-rspec'
+end
+
+group :development do
+  # bulk insert[https://github.com/zdennis/activerecord-import]
+  gem 'activerecord-import'
+
+  # N+1問題を検知する [https://github.com/flyerhzm/bullet]
+  gem 'bullet'
+
+  # [https://github.com/pry/pry-doc]
+  gem 'pry-doc'
 end

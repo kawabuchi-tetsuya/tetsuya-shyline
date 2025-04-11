@@ -5,5 +5,10 @@ FactoryBot.define do
     email { Faker::Internet.unique.email }
     password { Faker::Internet.password(min_length: 8) }
     confirmed_at { Time.current }
+
+    trait :unconfirmed do
+      confirmed_at { nil }
+      after(:build) {|u| u.skip_confirmation_notification! }
+    end
   end
 end

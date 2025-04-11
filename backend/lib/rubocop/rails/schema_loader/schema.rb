@@ -2,7 +2,7 @@
 
 # https://github.com/rubocop/rubocop-rails/blob/2a217d0c70e4c1d24efa6b638e93fa693a938276/lib/rubocop/rails/schema_loader.rb
 
-module RuboCop
+module Rubocop
   module Rails
     module SchemaLoader
       # Represent db/schema.rb

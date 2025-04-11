@@ -2,7 +2,7 @@
 
 # https://github.com/rubocop/rubocop-rails/blob/2a217d0c70e4c1d24efa6b638e93fa693a938276/lib/rubocop/rails/schema_loader.rb
 
-module RuboCop
+module Rubocop
   module Rails
     # It loads db/schema.rb and return Schema object.
     # Cops refers database schema information with this module.
