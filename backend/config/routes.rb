@@ -7,6 +7,9 @@ Rails.application.routes.draw do
         confirmations: 'api/v1/overrides/confirmations',
       }
 
+      namespace :user do
+        resource :confirmations, only: %i[update]
+      end
       namespace :current do
         resource :user, only: %i[show]
         resources :posts, only: %i[index show create update]
