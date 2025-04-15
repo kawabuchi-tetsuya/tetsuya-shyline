@@ -11,6 +11,9 @@ gem 'bcrypt', '~> 3.1.7'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', require: false
 
+# [https://github.com/rubyconfig/config]
+gem 'config'
+
 # ユーザー認証を提供[https://github.com/heartcombo/devise]
 gem 'devise'
 

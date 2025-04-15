@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import CurrentUserFetch from './components/CurrentUserFetch'
 
 // Route
+import Confirmation from './pages/confirmation'
 import CurrentPosts from './pages/current/posts'
 import CurrentPostDetail from './pages/current/posts/[id]'
 import CurrentPostsEdit from './pages/current/posts/edit/[id]'
@@ -30,6 +31,8 @@ function App() {
       <Routes>
         {/* ホームページ */}
         <Route path="/" element={<Home />} />
+        {/* 確認ページ */}
+        <Route path="/confirmation" element={<Confirmation />} />
         {/* サインインユーザー投稿一覧 */}
         <Route path="/current/posts" element={<CurrentPosts />} />
         {/* サインインユーザー投稿詳細 */}
