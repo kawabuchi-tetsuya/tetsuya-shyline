@@ -14,3 +14,12 @@ AllCops:
 require:
   - ./lib/rubocop/rails/schema_loader/schema.rb
   - ./lib/rubocop/rails/schema_loader.rb
+
+# 配列で%記法を使用する
+Style/WordArray:
+  Enabled: true
+  MinSize: 0
+
+Style/SymbolArray:
+  Enabled: true
+  MinSize: 0

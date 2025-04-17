@@ -9,7 +9,7 @@ module Api
             user.reload
 
             if recently_resent?(user)
-              return render json: { errors: ['再送は1分後に行えます'] }, status: :too_many_requests
+              return render json: { errors: %w[再送は1分後に行えます] }, status: :too_many_requests
             end
 
             user.update!(last_confirmation_sent_at: Time.current)
