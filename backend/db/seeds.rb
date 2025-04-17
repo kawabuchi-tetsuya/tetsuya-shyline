@@ -6,7 +6,7 @@ Faker::Config.random = Random.new(FAKER_RANDOM_NUM)
 
 users = []
 USERS_COUNT.times do |i|
-  name = "user#{i + 1}_#{Faker::Internet.username(specifier: 5..10, separators: ['_'])}"
+  name = "user#{i + 1}_#{Faker::Internet.username(specifier: 5..10, separators: %w[_])}"
   nickname = "ユーザー#{i + 1}"
   email = "user#{i + 1}@example.com"
   uid = "user#{i + 1}@example.com"
