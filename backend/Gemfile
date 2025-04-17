@@ -26,6 +26,9 @@ gem 'devise_token_auth'
 # enumを日本語化[https://github.com/zmbacker/enum_help]
 gem 'enum_help'
 
+# [https://github.com/janko/image_processing]
+gem 'image_processing', '~> 1.14'
+
 # Deploy this application anywhere as a Docker container [https://kamal-deploy.org]
 gem 'kamal', require: false
 

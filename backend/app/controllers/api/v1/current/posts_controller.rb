@@ -30,11 +30,11 @@ class Api::V1::Current::PostsController < Api::V1::BaseController
   private
 
   def post_params
-    params.expect(post: %i[content status])
+    params.expect(post: [:content, :status, images: []])
   end
 
   def resolve_paginated_posts(keyset_updated_at, keyset_id)
-    base_scope = current_user.posts.not_unsaved.preload(:user)
+    base_scope = current_user.posts.not_unsaved.preload(:user, images_attachments: :blob)
 
     if keyset_updated_at.present? && keyset_id.present?
       base_scope.where(

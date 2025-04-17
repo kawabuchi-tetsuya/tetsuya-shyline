@@ -3,6 +3,9 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import EditIcon from '@mui/icons-material/Edit'
 import { Avatar, Box, IconButton, Tooltip, Typography } from '@mui/material'
 import React from 'react'
+import { ImagePreviewModal } from '@/components/ImagePreviewModal'
+import { PostThumbnailList } from '@/components/PostThumbnailList'
+import { useImagePreviewModal } from '@/hooks/useImagePreviewModal'
 import { Post } from '@/types/post'
 import { Link } from 'react-router-dom'
 
@@ -18,6 +21,9 @@ const CurrentPostItem: React.FC<PostItemProps> = ({ post }) => {
       window.scrollY.toString()
     )
   }
+
+  const { selectedImageUrl, setSelectedImageUrl, modalRef } =
+    useImagePreviewModal()
 
   return (
     <Box
@@ -40,6 +46,23 @@ const CurrentPostItem: React.FC<PostItemProps> = ({ post }) => {
           >
             {post.content}
           </Typography>
+
+          {/* 画像 */}
+          {post.thumbnailUrls.length > 0 && (
+            <PostThumbnailList
+              thumbnails={post.thumbnailUrls}
+              originals={post.originalImageUrls}
+              onImageClick={setSelectedImageUrl}
+            />
+          )}
+
+          {/* 画像選択時にオーバーレイ表示 */}
+          {selectedImageUrl && (
+            <ImagePreviewModal
+              imageUrl={selectedImageUrl}
+              modalRef={modalRef}
+            />
+          )}
           <Typography sx={{ fontSize: 12 }}>
             最終更新：{post.updatedAtFromToday}
           </Typography>
@@ -52,8 +75,8 @@ const CurrentPostItem: React.FC<PostItemProps> = ({ post }) => {
       </Box>
       <Box
         sx={{
-          minWidth: 180,
-          width: 180,
+          minWidth: 145,
+          width: 145,
           display: 'flex',
           justifyContent: 'space-between',
           alignContent: 'center',

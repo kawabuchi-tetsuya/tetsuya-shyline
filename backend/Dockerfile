@@ -2,6 +2,9 @@ FROM ruby:3.4.1
 
 ARG RUBYGEMS_VERSION=3.6.3
 
+RUN apt-get update -qq && \
+    apt-get install -y libvips
+
 RUN mkdir /api
 
 WORKDIR /api

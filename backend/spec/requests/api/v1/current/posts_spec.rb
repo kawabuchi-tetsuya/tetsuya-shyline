@@ -28,7 +28,8 @@ RSpec.describe 'Api::V1::Current::Posts', type: :request do
 
           aggregate_failures do
             expect(res.keys).to eq %w[posts meta]
-            expect(res['posts'][0].keys).to eq %w[id content status created_at created_at_from_today updated_at updated_at_from_today user]
+            expect(res['posts'][0].keys).to eq %w[id content status created_at created_at_from_today updated_at updated_at_from_today
+original_image_urls thumbnail_urls user]
             expect(res['posts'][0]['user'].keys).to eq %w[name nickname]
             expect(res['meta'].keys).to eq %w[next_keyset]
             expect(res['meta']['next_keyset'].keys).to eq %w[updated_at id]
@@ -72,7 +73,8 @@ RSpec.describe 'Api::V1::Current::Posts', type: :request do
 
           aggregate_failures do
             expect(res.keys).to eq %w[posts meta]
-            expect(res['posts'][0].keys).to eq %w[id content status created_at created_at_from_today updated_at updated_at_from_today user]
+            expect(res['posts'][0].keys).to eq %w[id content status created_at created_at_from_today updated_at updated_at_from_today
+original_image_urls thumbnail_urls user]
             expect(res['posts'][0]['user'].keys).to eq %w[name nickname]
             expect(res['meta'].keys).to eq %w[next_keyset]
             expect(res['meta']['next_keyset'].keys).to eq %w[updated_at id]
@@ -158,7 +160,8 @@ RSpec.describe 'Api::V1::Current::Posts', type: :request do
         aggregate_failures do
           subject
           res = response.parsed_body
-          expect(res.keys).to eq %w[id content status created_at created_at_from_today updated_at updated_at_from_today user]
+          expect(res.keys).to eq %w[id content status created_at created_at_from_today updated_at updated_at_from_today original_image_urls thumbnail_urls
+user]
           expect(res['user'].keys).to eq %w[name nickname]
           expect(response).to have_http_status(:ok)
         end
@@ -190,7 +193,8 @@ RSpec.describe 'Api::V1::Current::Posts', type: :request do
           expect { subject }.to change { current_user.posts.count }.by(1)
           expect(current_user.posts.last).to be_unsaved
           res = response.parsed_body
-          expect(res.keys).to eq %w[id content status created_at created_at_from_today updated_at updated_at_from_today user]
+          expect(res.keys).to eq %w[id content status created_at created_at_from_today updated_at updated_at_from_today original_image_urls thumbnail_urls
+user]
           expect(res['user'].keys).to eq %w[name nickname]
           expect(response).to have_http_status(:ok)
         end
@@ -204,7 +208,8 @@ RSpec.describe 'Api::V1::Current::Posts', type: :request do
         aggregate_failures do
           expect { subject }.not_to change { current_user.posts.count }
           res = response.parsed_body
-          expect(res.keys).to eq %w[id content status created_at created_at_from_today updated_at updated_at_from_today user]
+          expect(res.keys).to eq %w[id content status created_at created_at_from_today updated_at updated_at_from_today original_image_urls thumbnail_urls
+user]
           expect(res['user'].keys).to eq %w[name nickname]
           expect(response).to have_http_status(:ok)
         end
@@ -229,7 +234,8 @@ RSpec.describe 'Api::V1::Current::Posts', type: :request do
           expect { subject }.to change { current_user_post.reload.content }.from('current user post').to('updated content') and
             change { current_user_post.reload.status }.from('draft').to('published')
           res = response.parsed_body
-          expect(res.keys).to eq %w[id content status created_at created_at_from_today updated_at updated_at_from_today user]
+          expect(res.keys).to eq %w[id content status created_at created_at_from_today updated_at updated_at_from_today original_image_urls thumbnail_urls
+user]
           expect(res['user'].keys).to eq %w[name nickname]
           expect(response).to have_http_status(:ok)
         end

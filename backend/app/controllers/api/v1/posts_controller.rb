@@ -13,7 +13,7 @@ class Api::V1::PostsController < Api::V1::BaseController
   private
 
   def resolve_paginated_posts(keyset_updated_at, keyset_id)
-    base_scope = Post.published.preload(:user)
+    base_scope = Post.published.preload(:user, images_attachments: :blob)
 
     if keyset_updated_at.present? && keyset_id.present?
       base_scope.where(

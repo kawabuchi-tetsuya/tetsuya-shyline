@@ -1,0 +1,1 @@
+This is an INVALID file for image tests.

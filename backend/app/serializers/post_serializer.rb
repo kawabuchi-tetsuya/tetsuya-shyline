@@ -1,5 +1,9 @@
 class PostSerializer < ActiveModel::Serializer
-  attributes :id, :content, :status, :created_at, :created_at_from_today, :updated_at, :updated_at_from_today
+  include Rails.application.routes.url_helpers
+  include ActionView::Helpers::AssetUrlHelper
+  Rails.application.routes.default_url_options[:host] = ENV.fetch('APP_HOST', Settings.api_domain)
+
+  attributes :id, :content, :status, :created_at, :created_at_from_today, :updated_at, :updated_at_from_today, :original_image_urls, :thumbnail_urls
   belongs_to :user, serializer: UserSerializer
 
   def created_at
@@ -8,6 +12,25 @@ class PostSerializer < ActiveModel::Serializer
 
   def created_at_from_today
     from_today(object.created_at)
+  end
+
+  def original_image_urls
+    return [] unless object.images.attached?
+
+    object.images.map do |img|
+      Rails.application.routes.url_helpers.url_for(img)
+    end
+  end
+
+  def thumbnail_urls(size = Post::THUMBNAIL_SIZE)
+    return [] unless object.images.attached?
+
+    object.images.map do |img|
+      Rails.application.routes.url_helpers.rails_representation_url(
+        img.variant(resize_to_fill: size).processed,
+        only_path: false,
+      )
+    end
   end
 
   def updated_at
