@@ -6,5 +6,10 @@ export type Post = {
   createdAtFromToday: string
   updatedAt: string
   updatedAtFromToday: string
-  user: { name: string }
+  originalImageUrls: string[]
+  thumbnailUrls: string[]
+  user: {
+    name: string
+    nickname: string
+  }
 }

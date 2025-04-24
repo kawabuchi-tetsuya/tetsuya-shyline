@@ -11,6 +11,9 @@ import {
   Typography,
 } from '@mui/material'
 import { Post } from '@/types/post'
+import { ImagePreviewModal } from '@/components/ImagePreviewModal'
+import { PostThumbnailList } from '@/components/PostThumbnailList'
+import { useImagePreviewModal } from '@/hooks/useImagePreviewModal'
 import DebugPostDetail from './DebugPostDetail'
 
 type PostDetailProps = {
@@ -18,6 +21,9 @@ type PostDetailProps = {
 }
 
 const PostDetailItem: React.FC<PostDetailProps> = ({ post }) => {
+  const { selectedImageUrl, setSelectedImageUrl, modalRef } =
+    useImagePreviewModal()
+
   if (!post) return <p>投稿が見つかりませんでした</p>
 
   const primaryTextStyle = {
@@ -74,6 +80,23 @@ const PostDetailItem: React.FC<PostDetailProps> = ({ post }) => {
               >
                 {post?.content}
               </Typography>
+
+              {/* 画像 */}
+              {post.thumbnailUrls.length > 0 && (
+                <PostThumbnailList
+                  thumbnails={post.thumbnailUrls}
+                  originals={post.originalImageUrls}
+                  onImageClick={setSelectedImageUrl}
+                />
+              )}
+
+              {/* 画像選択時にオーバーレイ表示 */}
+              {selectedImageUrl && (
+                <ImagePreviewModal
+                  imageUrl={selectedImageUrl}
+                  modalRef={modalRef}
+                />
+              )}
             </Box>
             <List sx={{ color: '#6E7B85' }}>
               <ListItem divider>

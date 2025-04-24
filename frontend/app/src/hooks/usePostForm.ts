@@ -105,14 +105,24 @@ export const usePostForm = (postId: string | undefined) => {
     dispatch({ type: 'SET_IS_LOADING', payload: true })
 
     const patchUrl = `${import.meta.env.VITE_API_BASE_URL}/current/posts/${postId}`
-    const headers = getAuthHeaders()
+    const headers = {
+      ...getAuthHeaders(),
+      // 画像
+      'Content-Type': 'multipart/form-data',
+    }
+
+    const data = new FormData()
+    data.append('post[content]', formData.content)
+    data.append('post[status]', state.statusChecked ? 'published' : 'draft')
+
+    if (formData.images) {
+      for (const file of formData.images) {
+        data.append('post[images][]', file)
+      }
+    }
 
     axios
-      .patch(
-        patchUrl,
-        { ...formData, status: state.statusChecked ? 'published' : 'draft' },
-        { headers }
-      )
+      .patch(patchUrl, data, { headers })
       .then(() =>
         setSnackbar({
           message: '投稿を保存しました',

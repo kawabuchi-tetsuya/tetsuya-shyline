@@ -28,6 +28,7 @@ RSpec.describe User, type: :model do
 
     context '認証済みユーザーのとき' do
       let!(:user) { create(:user, :unconfirmed) }
+
       it 'メール認証後は confirmed_at がセットされる' do
         user.confirm
         expect(user.confirmed_at).not_to be_nil
