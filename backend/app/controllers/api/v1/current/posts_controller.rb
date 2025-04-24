@@ -23,8 +23,16 @@ class Api::V1::Current::PostsController < Api::V1::BaseController
   # PATCH api/v1/current/posts/:id
   def update
     post = current_user.posts.find(params[:id])
-    post.update!(post_params)
-    render json: post
+
+    begin
+      if post.update(post_params)
+        render json: post
+      else
+        render json: { errors: post.errors.full_messages }, status: :unprocessable_entity
+      end
+    rescue ArgumentError => e
+      render json: { errors: [e.message] }, status: :unprocessable_entity
+    end
   end
 
   private
