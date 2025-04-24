@@ -21,18 +21,15 @@ RSpec.describe User, type: :model do
     context '未認証ユーザーのとき' do
       let!(:user) { build_stubbed(:user, confirmed_at: nil) }
 
-      it 'confirmed_at が nil である' do
-        expect(user.confirmed_at).to be_nil
-      end
+      it ('confirmed_at が nil である') { expect(user.confirmed_at).to be_nil }
     end
 
     context '認証済みユーザーのとき' do
       let!(:user) { create(:user, :unconfirmed) }
 
-      it 'メール認証後は confirmed_at がセットされる' do
-        user.confirm
-        expect(user.confirmed_at).not_to be_nil
-      end
+      before { user.confirm }
+
+      it ('メール認証後は confirmed_at がセットされる') { expect(user.confirmed_at).not_to be_nil }
     end
   end
 end
