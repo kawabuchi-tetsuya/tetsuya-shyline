@@ -9,11 +9,11 @@ class Post < ApplicationRecord
   enum :status, { unsaved: 10, draft: 20, published: 30 }
 
   validate :content_length_within_limit
-  validate :images_count_within_limit
-  validate :images_format_within_limit
-  validate :images_size_within_limit
   validate :verify_only_one_unsaved_status_is_allowed
   validates :content, presence: true, if: :published?
+  validates :images, content_type: ALLOWED_IMAGE_CONTENT_TYPES
+  validates :images, limit: { max: IMAGES_MAX_COUNT }
+  validates :images, size: { less_than_or_equal_to: IMAGE_MAX_SIZE_MB.megabytes }
   validates :status, presence: true, inclusion: { in: statuses.keys }
 
   belongs_to :user
@@ -30,28 +30,6 @@ class Post < ApplicationRecord
   def content_length_within_limit
     if content.present? && content.length > CONTENT_MAX_LENGTH
       errors.add(:content, "は#{CONTENT_MAX_LENGTH}文字以内で入力してください")
-    end
-  end
-
-  def images_count_within_limit
-    if images.count > IMAGES_MAX_COUNT
-      errors.add(:images, "は最大#{IMAGES_MAX_COUNT}枚までです")
-    end
-  end
-
-  def images_format_within_limit
-    images.each do |image|
-      unless image.content_type.in?(ALLOWED_IMAGE_CONTENT_TYPES)
-        errors.add(:images, 'はJPEG, PNG, WebP形式のみアップロードできます')
-      end
-    end
-  end
-
-  def images_size_within_limit
-    images.each do |image|
-      if image.byte_size > IMAGE_MAX_SIZE_MB.megabytes
-        errors.add(:images, "のサイズは#{IMAGE_MAX_SIZE_MB}MB以内にしてください")
-      end
     end
   end
 
