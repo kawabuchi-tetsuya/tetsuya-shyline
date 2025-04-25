@@ -52,51 +52,11 @@ RSpec.describe Post, type: :model do
     end
 
     describe '画像について' do
-      let!(:user) { create(:user) }
-      let!(:post) { build(:post, user:) }
+      subject { build(:post) }
 
-      context '画像が正しく添付されているとき' do
-        subject { post }
-        before do
-          post.images.attach(fixture_file('sample.jpg', 'image/jpeg'))
-          subject.valid?
-        end
-
-        it ('有効である') { expect(subject).to be_valid }
-      end
-
-      context '画像枚数の上限を超えるとき' do
-        subject { post }
-        before do
-          (Post::IMAGES_MAX_COUNT + 1).times do
-            post.images.attach(fixture_file('sample.jpg', 'image/jpeg'))
-          end
-
-          subject.valid?
-        end
-
-        include_examples '1つのエラーメッセージが返る', field: :images, message: "は最大#{Post::IMAGES_MAX_COUNT}枚までです"
-      end
-
-      context 'サポートされていないファイル形式のとき' do
-        subject { post }
-        before do
-          post.images.attach(fixture_file('invalid_file.txt', 'text/plain'))
-          subject.valid?
-        end
-
-        include_examples '1つのエラーメッセージが返る', field: :images, message: 'はJPEG, PNG, WebP形式のみアップロードできます'
-      end
-
-      context '画像サイズの上限を超えるとき' do
-        subject { post }
-        before do
-          post.images.attach(fixture_file('oversized.jpg', 'image/jpeg'))
-          subject.valid?
-        end
-
-        include_examples '1つのエラーメッセージが返る', field: :images, message: "のサイズは#{Post::IMAGE_MAX_SIZE_MB}MB以内にしてください"
-      end
+      it { is_expected.to validate_content_type_of(:images).allowing(Post::ALLOWED_IMAGE_CONTENT_TYPES) }
+      it { is_expected.to validate_limits_of(:images).max(Post::IMAGES_MAX_COUNT) }
+      it { is_expected.to validate_size_of(:images).less_than_or_equal_to(Post::IMAGE_MAX_SIZE_MB.megabytes) }
     end
   end
 
