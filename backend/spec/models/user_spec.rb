@@ -2,15 +2,31 @@ RSpec.describe User, type: :model do
   describe 'validations' do
     subject { build(:user) }
 
-    it { should validate_presence_of(:email) }
-    it { should validate_uniqueness_of(:email).case_insensitive.scoped_to(:provider) }
-    it { should validate_presence_of(:name) }
-    it { should validate_uniqueness_of(:name) }
-    it { should validate_length_of(:name).is_at_most(User::USERNAME_MAX_LENGTH) }
+    describe 'avatar について' do
+      it { should validate_content_type_of(:avatar).allowing('image/jpeg', 'image/png', 'image/webp') }
+      it { should validate_size_of(:avatar).less_than_or_equal_to(5.megabytes) }
+    end
+
+    describe 'email について' do
+      it { should validate_presence_of(:email) }
+      it { should validate_uniqueness_of(:email).case_insensitive.scoped_to(:provider) }
+    end
+
+    describe 'name について' do
+      it { should validate_presence_of(:name) }
+      it { should validate_uniqueness_of(:name) }
+      it { should validate_length_of(:name).is_at_most(User::USERNAME_MAX_LENGTH) }
+    end
+
+    describe 'nickname について' do
     it { should validate_presence_of(:nickname) }
     it { should allow_value('卍' * User::NICKNAME_MAX_LENGTH).for(:nickname) }
     it { should_not allow_value('卍' * (User::NICKNAME_MAX_LENGTH + 1)).for(:nickname) }
-    it { should validate_presence_of(:password) }
+    end
+
+    describe 'password について' do
+      it { should validate_presence_of(:password) }
+    end
   end
 
   describe 'associations' do
