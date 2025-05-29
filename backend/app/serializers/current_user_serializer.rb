@@ -1,3 +1,3 @@
-class CurrentUserSerializer < ActiveModel::Serializer
-  attributes :id, :name, :nickname, :email
+class CurrentUserSerializer < UserSerializer
+  attributes :email
 end

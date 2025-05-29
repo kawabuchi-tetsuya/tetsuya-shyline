@@ -157,11 +157,11 @@ const Header = () => {
                     onClose={handleClose}
                     onClick={handleClose}
                   >
-                    <Box sx={{ pl: 2, py: 1 }}>
+                    <MenuItem component={Link} to="/current/user">
                       <Typography sx={{ fontWeight: 'bold' }}>
-                        {user.name}
+                        {user.nickname}
                       </Typography>
-                    </Box>
+                    </MenuItem>
                     <Divider />
                     <MenuItem
                       component={Link}

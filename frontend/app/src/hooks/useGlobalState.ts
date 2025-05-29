@@ -6,6 +6,7 @@ export const useUserState = () => {
   const fallbackData: UserStateType = {
     id: 0,
     name: '',
+    nickname: '',
     email: '',
     isSignedIn: false,
     isFetched: false,

@@ -53,4 +53,6 @@ Rails.application.configure do
 
   # テスト環境でSpringがキャッシュしないようにする
   config.cache_classes = false
+
+  config.x.frontend_host = 'http://localhost:3000'
 end

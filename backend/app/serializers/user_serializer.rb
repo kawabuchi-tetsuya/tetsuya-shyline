@@ -1,4 +1,3 @@
 class UserSerializer < ActiveModel::Serializer
-  attributes :name, :nickname
-  has_many :for_order_posts, serializer: PostSerializer
+  attributes :name, :nickname, :avatar_url
 end

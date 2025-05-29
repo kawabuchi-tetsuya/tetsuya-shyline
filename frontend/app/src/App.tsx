@@ -6,6 +6,9 @@ import Confirmation from './pages/confirmation'
 import CurrentPosts from './pages/current/posts'
 import CurrentPostDetail from './pages/current/posts/[id]'
 import CurrentPostsEdit from './pages/current/posts/edit/[id]'
+import CurrentUser from './pages/current/user'
+import CurrentUserEditAvatar from './pages/current/user/edit/avatar'
+import CurrentUserEditNickname from './pages/current/user/edit/nickname'
 import Home from './pages/home'
 import HealthCheck from './pages/health_check'
 import Index from './pages/index'
@@ -39,6 +42,18 @@ function App() {
         <Route path="/current/posts/:id" element={<CurrentPostDetail />} />
         {/* サインインユーザー投稿編集 */}
         <Route path="/current/posts/edit/:id" element={<CurrentPostsEdit />} />
+        {/* サインインユーザー情報 */}
+        <Route path="/current/user" element={<CurrentUser />} />
+        {/* サインインユーザーアバター編集 */}
+        <Route
+          path="/current/user/edit/avatar"
+          element={<CurrentUserEditAvatar />}
+        />
+        {/* サインインユーザー名編集 */}
+        <Route
+          path="/current/user/edit/nickname"
+          element={<CurrentUserEditNickname />}
+        />
         {/* ヘルスチェック */}
         <Route path="/health-check" element={<HealthCheck />} />{' '}
         {/* 投稿一覧ページ */}
