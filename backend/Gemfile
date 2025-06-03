@@ -35,6 +35,9 @@ gem 'image_processing', '~> 1.14'
 # Deploy this application anywhere as a Docker container [https://kamal-deploy.org]
 gem 'kamal', require: false
 
+# [https://rubygems.org/gems/mime-types/versions/3.6.2?locale=ja]
+gem 'mime-types', '~> 3.6', '>= 3.6.2'
+
 # Use mysql as the database for Active Record
 gem 'mysql2', '~> 0.5'
 

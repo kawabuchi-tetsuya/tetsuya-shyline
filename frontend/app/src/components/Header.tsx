@@ -1,6 +1,6 @@
 import ArticleIcon from '@mui/icons-material/Article'
 import Logout from '@mui/icons-material/Logout'
-import PersonIcon from '@mui/icons-material/Person'
+
 import {
   AppBar,
   Avatar,
@@ -17,11 +17,13 @@ import {
 import axios, { AxiosError, AxiosResponse } from 'axios'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useCurrentUser } from '@/hooks/useCurrentUser'
 import { useUserState } from '@/hooks/useGlobalState'
 import { getAuthHeaders } from '@/utils/auth'
 
 const Header = () => {
   const [user] = useUserState()
+  const { user: currentUser } = useCurrentUser()
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
 
@@ -130,9 +132,14 @@ const Header = () => {
                 // ログイン済みのとき
                 <Box sx={{ display: 'flex' }}>
                   <IconButton onClick={handleClick} sx={{ p: 0 }}>
-                    <Avatar>
-                      <PersonIcon />
-                    </Avatar>
+                    <Avatar
+                      src={currentUser?.avatarUrl}
+                      sx={{
+                        width: 40,
+                        height: 40,
+                        border: '1px solid #CCC',
+                      }}
+                    />
                   </IconButton>
                   <Box sx={{ ml: 2 }}>
                     <Button
@@ -159,7 +166,7 @@ const Header = () => {
                   >
                     <MenuItem component={Link} to="/current/user">
                       <Typography sx={{ fontWeight: 'bold' }}>
-                        {user.nickname}
+                        {currentUser?.nickname}
                       </Typography>
                     </MenuItem>
                     <Divider />

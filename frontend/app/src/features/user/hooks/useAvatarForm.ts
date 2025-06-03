@@ -1,3 +1,4 @@
+import { DirectUpload } from '@rails/activestorage'
 import { useEffect, useState } from 'react'
 import apiClient from '@/axiosConfig'
 import { useSnackbarState } from '@/hooks/useGlobalState'
@@ -30,30 +31,49 @@ export const useAvatarForm = ({ user, mutate }: Props) => {
   const handleSubmit = async () => {
     if (!selectedFile) return
     setIsSubmitting(true)
-    const formData = new FormData()
-    formData.append('avatar', selectedFile)
-    try {
-      await apiClient.patch('/current/user/avatar', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      })
-      mutate()
-      setSnackbar({
-        message: 'アバター画像を更新しました',
-        severity: 'success',
-        pathname: '/current/user/edit/avatar',
-      })
-    } catch (error) {
-      console.error(error)
-      setSnackbar({
-        message: 'アバター画像の更新に失敗しました',
-        severity: 'error',
-        pathname: '/current/user/edit/avatar',
-      })
-    } finally {
-      setIsSubmitting(false)
-    }
+
+    const upload = new DirectUpload(
+      selectedFile,
+      '/rails/active_storage/direct_uploads'
+    )
+
+    upload.create((error, blob) => {
+      if (error) {
+        console.error(error)
+        setSnackbar({
+          message: 'アップロードに失敗しました',
+          severity: 'error',
+          pathname: '/current/user/edit/avatar',
+        })
+        setIsSubmitting(false)
+      } else {
+        apiClient
+          .patch(
+            '/current/user/avatar',
+            { avatar: blob.signed_id },
+            { headers: { 'Content-Type': 'application/json' } }
+          )
+          .then(() => {
+            mutate()
+            setSnackbar({
+              message: 'アバター画像を更新しました',
+              severity: 'success',
+              pathname: '/current/user/edit/avatar',
+            })
+          })
+          .catch((error) => {
+            console.error(error)
+            setSnackbar({
+              message: 'アバター画像の更新に失敗しました',
+              severity: 'error',
+              pathname: '/current/user/edit/avatar',
+            })
+          })
+          .finally(() => {
+            setIsSubmitting(false)
+          })
+      }
+    })
   }
 
   return {

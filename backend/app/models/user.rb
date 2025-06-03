@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'mime/types'
+
 class User < ApplicationRecord
   include DeviseTokenAuth::Concerns::User
 
@@ -7,6 +9,7 @@ class User < ApplicationRecord
   AVATAR_MAX_SIZE_MB = 5
   AVATAR_SQUARE_SIZE = [150, 150]
   NICKNAME_MAX_LENGTH = 30
+  THUMBNAIL_SIZE = [100, 100]
   USERNAME_MAX_LENGTH = 30
 
   # Include default devise modules. Others available are:
@@ -22,29 +25,40 @@ class User < ApplicationRecord
 
   has_one_attached :avatar
 
-  after_commit :attach_default_avatar, on: %i[create update]
+  after_commit :generate_avatar_variant, if: :avatar_previously_changed?
 
   has_many :posts, dependent: :destroy
   has_many :for_order_posts, -> { order(updated_at: :desc, id: :desc) }, dependent: :destroy, inverse_of: :user, class_name: :Post
 
-  def avatar_url
+  def avatar_url(size = THUMBNAIL_SIZE)
     if avatar.attached?
       Rails.application.routes.url_helpers.rails_representation_url(
-        avatar.variant(resize_to_fill: AVATAR_SQUARE_SIZE).processed,
+        avatar.variant(resize_to_fill: size),
+        only_path: false,
         host: Rails.application.config.x.frontend_host,
       )
     else
-      "#{Rails.application.config.x.frontend_host}/images/default-avatar.png"
+      default_avatar_url
     end
+  rescue => e
+    Rails.logger.warn("Failed to generate avatar URL: #{e}")
+    default_avatar_url
   end
 
   private
 
-  def attach_default_avatar
-    return if avatar.attached?
+  def avatar_previously_changed?
+    previous_changes.has_key?('avatar')
+  end
 
-    default_path = Rails.root.join('app/assets/images/default-avatar.png')
-    avatar.attach(io: File.open(default_path), filename: 'default-avatar.png', content_type: 'image/png') if File.exist?(default_path)
+  def default_avatar_url
+    "#{Rails.application.config.x.frontend_host || 'http://localhost:3000'}/images/default-avatar.png"
+  end
+
+  def generate_avatar_variant
+    avatar.variant(resize_to_fill: AVATAR_SQUARE_SIZE).processed
+  rescue => e
+    Rails.logger.warn("Failed to generate avatar variant: #{e}")
   end
 
   def nickname_length_within_limit

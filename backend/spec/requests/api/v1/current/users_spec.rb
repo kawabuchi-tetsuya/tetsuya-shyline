@@ -14,9 +14,9 @@ RSpec.describe 'Api::V1::Current::Users', type: :request do
 
       it('レスポンスの構造が正しい') { expect(res.keys).to eq %w[name nickname avatar_url email] }
       it('レスポンスの値が正しい') { expect(res['name']).to eq current_user.name }
-      it 'デフォルトアバターがセットされている' do
+      it 'デフォルトアバターのURLが返る' do
         aggregate_failures do
-          expect(current_user.reload.avatar).to be_attached
+          expect(current_user.reload.avatar).not_to be_attached
           expect(res['avatar_url']).to include('/default-avatar.png')
         end
       end

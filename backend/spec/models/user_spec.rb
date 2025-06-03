@@ -49,32 +49,54 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe '#avatar' do
+    describe 'デフォルトアバターの添付' do
+      let(:user) { create(:user) }
+
+      context 'アバターが添付されていないとき' do
+        it 'デフォルトアバターのURLが返される' do
+          aggregate_failures do
+            expect(user.avatar).not_to be_attached
+            expect(user.avatar_url).to eq("#{Rails.application.config.x.frontend_host || 'http://localhost:3000'}/images/default-avatar.png")
+          end
+        end
+      end
+
+      context 'アバターがすでに添付されているとき' do
+        before do
+          user.avatar.attach(fixture_file_upload(Rails.root.join('spec/fixtures/files/sample-avatar.png'), 'image/png'))
+        end
+
+        it '既存のアバターを維持する' do
+          aggregate_failures do
+            expect(user.avatar).to be_attached
+            expect(user.avatar.filename.to_s).to eq('sample-avatar.png')
+          end
+        end
+      end
+    end
+  end
+
   describe '#avatar_url' do
     subject { user.avatar_url }
 
-    let(:user) { build(:user) }
+    let(:user) { create(:user) }
 
-    context 'アバター画像がセットされたとき' do
+    context 'アバター画像が attach されたとき' do
+      let(:image) { fixture_file_upload(Rails.root.join('spec/fixtures/files/sample-avatar.png'), 'image/png') }
+
       before do
-        user.avatar.attach(io: StringIO.new('fake image'), filename: 'sample-avatar.png', content_type: 'image/png')
-
-        variant_double = double('variant', processed: :resized_image)
-        allow(user.avatar).to receive(:variant).with(resize_to_fill: User::AVATAR_SQUARE_SIZE).and_return(variant_double)
-        allow(Rails.application.routes.url_helpers).to receive(:rails_representation_url).with(
-          :resized_image,
-          host: Rails.application.config.x.frontend_host,
-        ).and_return('/rails/active_storage/variant/123')
+        user.avatar.attach(image)
       end
 
-      it 'リサイズされた画像のURLを返す' do
-        expect(subject).to eq('/rails/active_storage/variant/123')
+      it 'アバター画像のURLを返す' do
+        url = URI(subject)
+        expect(url.to_s).to start_with("#{Rails.application.config.x.frontend_host || 'http://localhost:3000'}/rails/active_storage")
       end
     end
 
-    context 'アバター画像がセットされていないとき' do
-      it 'デフォルト画像のURLを返す' do
-        expect(subject).to eq("#{Rails.application.config.x.frontend_host}/images/default-avatar.png")
-      end
+    context 'アバター画像が attach されていないとき' do
+      it('デフォルト画像のURLを返す') { expect(subject).to eq("#{Rails.application.config.x.frontend_host || 'http://localhost:3000'}/images/default-avatar.png") }
     end
   end
 end

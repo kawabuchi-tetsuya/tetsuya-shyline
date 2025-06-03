@@ -11,5 +11,6 @@ export type Post = {
   user: {
     name: string
     nickname: string
+    avatarUrl: string
   }
 }
