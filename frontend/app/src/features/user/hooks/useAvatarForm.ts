@@ -34,7 +34,7 @@ export const useAvatarForm = ({ user, mutate }: Props) => {
 
     const upload = new DirectUpload(
       selectedFile,
-      '/rails/active_storage/direct_uploads'
+      `${import.meta.env.VITE_API_BASE_URL.replace(/\/api\/v1$/, '')}/rails/active_storage/direct_uploads`
     )
 
     upload.create((error, blob) => {
