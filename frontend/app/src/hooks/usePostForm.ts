@@ -107,7 +107,6 @@ export const usePostForm = (postId: string | undefined) => {
     const patchUrl = `${import.meta.env.VITE_API_BASE_URL}/current/posts/${postId}`
     const headers = {
       ...getAuthHeaders(),
-      // 画像
       'Content-Type': 'multipart/form-data',
     }
 
@@ -117,7 +116,11 @@ export const usePostForm = (postId: string | undefined) => {
 
     if (formData.images) {
       for (const file of formData.images) {
-        data.append('post[images][]', file)
+        if (file instanceof File) {
+          data.append('post[images][]', file)
+        } else {
+          console.warn('Invalid image:', file)
+        }
       }
     }
 

@@ -14,7 +14,7 @@ import { Post } from '@/types/post'
 import { ImagePreviewModal } from '@/components/ImagePreviewModal'
 import { PostThumbnailList } from '@/components/PostThumbnailList'
 import { useImagePreviewModal } from '@/hooks/useImagePreviewModal'
-import DebugPostDetail from './DebugPostDetail'
+import DebugPostDetail from '@/components/DebugPostDetail'
 
 type PostDetailProps = {
   post: Post | null
@@ -51,7 +51,24 @@ const PostDetailItem: React.FC<PostDetailProps> = ({ post }) => {
                 lineHeight: '40px',
               }}
             >
-              {post?.user.name} さんの投稿
+              <Box
+                component="span"
+                sx={{ fontWeight: 'bold', color: 'text.primary' }}
+              >
+                {post?.user.nickname}
+              </Box>
+              <Box
+                component="span"
+                sx={{ fontWeight: 'normal', color: 'text.secondary', ml: 0.5 }}
+              >
+                @{post?.user.name}
+              </Box>
+              <Box
+                component="span"
+                sx={{ fontWeight: 'bold', color: 'text.primary' }}
+              >
+                さんの投稿
+              </Box>
             </Typography>
           </Box>
         </Box>

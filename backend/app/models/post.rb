@@ -18,10 +18,8 @@ class Post < ApplicationRecord
 
   belongs_to :user
 
-  has_many_attached :images
-
-  def thumbnail(index = 0, size = THUMBNAIL_SIZE)
-    images[index]&.variant(resize_to_fill: size)&.processed
+  has_many_attached :images do |attachable|
+    attachable.variant :thumb, resize_to_fill: THUMBNAIL_SIZE, preprocessed: true
   end
 
   private

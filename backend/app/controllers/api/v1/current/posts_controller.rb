@@ -42,7 +42,9 @@ class Api::V1::Current::PostsController < Api::V1::BaseController
   end
 
   def resolve_paginated_posts(keyset_updated_at, keyset_id)
-    base_scope = current_user.posts.not_unsaved.preload(:user, images_attachments: :blob)
+    base_scope = current_user.posts.not_unsaved.
+                   preload(user: { avatar_attachment: :blob }).
+                   with_attached_images
 
     if keyset_updated_at.present? && keyset_id.present?
       base_scope.where(

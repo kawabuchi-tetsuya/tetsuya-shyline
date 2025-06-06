@@ -79,7 +79,11 @@ RSpec.configure do |config|
 
   config.include TimeFormatHelper
 
-  Rails.application.routes.default_url_options[:host] = 'http://localhost:3000'
+  Rails.application.routes.default_url_options = {
+    host: 'localhost',
+    port: 3000,
+    protocol: 'http',
+  }
 end
 
 # Gem(shoulda-matchers)の設定

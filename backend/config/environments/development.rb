@@ -76,7 +76,11 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: 'localhost:3000' }
   config.action_mailer.delivery_method = :letter_opener_web
 
-  config.x.frontend_host = 'http://localhost:3000'
+  config.x.frontend_host = 'http://localhost:5173'
 end
 
-Rails.application.routes.default_url_options[:host] = 'localhost:3000'
+Rails.application.routes.default_url_options = {
+  host: 'localhost',
+  port: 3000,
+  protocol: 'http',
+}

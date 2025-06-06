@@ -1,6 +1,6 @@
 // 投稿アイテムを表示するコンポーネント
 import { useNavigate } from 'react-router-dom'
-import { Box, Card, CardContent, Typography } from '@mui/material'
+import { Avatar, Box, Card, CardContent, Typography } from '@mui/material'
 import { ImagePreviewModal } from '@/components/ImagePreviewModal'
 import { PostThumbnailList } from '@/components/PostThumbnailList'
 import { useImagePreviewModal } from '@/hooks/useImagePreviewModal'
@@ -23,18 +23,38 @@ const PostItem: React.FC<PostItemProps> = ({ post }) => {
   return (
     <Card onClick={handleClick}>
       <CardContent>
-        <Typography
-          component={'h3'}
-          sx={{
-            mb: 2,
-            minHeight: 20,
-            fontSize: 16,
-            fontWeight: 'bold',
-            lineHeight: 1.5,
-          }}
-        >
-          {post.user.name}
-        </Typography>
+        <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+          <Avatar
+            src={post.user.avatarUrl ?? '/images/default-avatar.png'}
+            sx={{
+              width: { xs: 40, sm: 50 },
+              height: { xs: 40, sm: 50 },
+              mr: 1,
+              border: '1px solid #CCC',
+            }}
+          />
+          <Typography
+            component={'h3'}
+            sx={{
+              minHeight: 20,
+              fontSize: 16,
+              lineHeight: 1.5,
+            }}
+          >
+            <Box
+              component="span"
+              sx={{ fontWeight: 'bold', color: 'text.primary' }}
+            >
+              {post.user.nickname}
+            </Box>
+            <Box
+              component="span"
+              sx={{ fontWeight: 'normal', color: 'text.secondary', ml: 0.5 }}
+            >
+              @{post.user.name}
+            </Box>
+          </Typography>
+        </Box>
 
         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
           <div className="border p-4 mb-2 rounded shadow">

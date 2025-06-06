@@ -19,10 +19,12 @@ end
 
 User.import users
 
-default_avatar_path = Rails.root.join('app/assets/images/default-avatar.png')
+sample_avatar_path = Rails.root.join('app/assets/images/sample-avatar.png')
 
 User.find_each do |user|
-  user.avatar.attach(io: File.open(default_avatar_path), filename: 'default-avatar.png', content_type: 'image/png')
+  if user.id % 2 == 1
+    user.avatar.attach(io: File.open(sample_avatar_path), filename: 'sample-avatar.png', content_type: 'image/png')
+  end
 end
 
 posts = []
