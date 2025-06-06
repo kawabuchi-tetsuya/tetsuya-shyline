@@ -19,6 +19,14 @@ end
 
 User.import users
 
+sample_avatar_path = Rails.root.join('app/assets/images/sample-avatar.png')
+
+User.find_each do |user|
+  if user.id % 2 == 1
+    user.avatar.attach(io: File.open(sample_avatar_path), filename: 'sample-avatar.png', content_type: 'image/png')
+  end
+end
+
 posts = []
 TOTAL_POSTS_COUNT.times do |i|
   user_id = i % USERS_COUNT + 1

@@ -78,6 +78,12 @@ RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
 
   config.include TimeFormatHelper
+
+  Rails.application.routes.default_url_options = {
+    host: 'localhost',
+    port: 3000,
+    protocol: 'http',
+  }
 end
 
 # Gem(shoulda-matchers)の設定

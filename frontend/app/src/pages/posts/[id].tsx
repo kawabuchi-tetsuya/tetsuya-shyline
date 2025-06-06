@@ -1,7 +1,7 @@
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import { Avatar, Box, Container, IconButton, Tooltip } from '@mui/material'
 import Error from '@/components/Error'
-import PostDetailItem from '@/components/PostDetailItem'
+import PostDetailItem from '@/features/post/components/PostDetailItem'
 import Loader from '@/components/Loader'
 import { useFetchPostDetail } from '@/hooks/useFetchPostDetail'
 import { styles } from '@/styles'

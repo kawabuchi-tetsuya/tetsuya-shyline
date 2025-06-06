@@ -444,6 +444,7 @@ DEPENDENCIES
   solid_cable
   solid_cache
   solid_queue
+  spring
   spring-commands-rspec
   thruster
   tzinfo-data

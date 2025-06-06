@@ -22,13 +22,12 @@ class PostSerializer < ActiveModel::Serializer
     end
   end
 
-  def thumbnail_urls(size = Post::THUMBNAIL_SIZE)
+  def thumbnail_urls
     return [] unless object.images.attached?
 
     object.images.map do |img|
       Rails.application.routes.url_helpers.rails_representation_url(
-        img.variant(resize_to_fill: size).processed,
-        only_path: false,
+        img.variant(:thumb),
       )
     end
   end

@@ -11,8 +11,12 @@ Rails.application.routes.draw do
         resource :confirmations, only: %i[update]
       end
       namespace :current do
-        resource :user, only: %i[show]
+        resource :user, only: %i[show update]
         resources :posts, only: %i[index show create update]
+
+        namespace :user do
+          resource :avatar, only: %i[update]
+        end
       end
       resources :posts, only: %i[index show]
     end

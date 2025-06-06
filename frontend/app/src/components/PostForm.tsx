@@ -44,6 +44,7 @@ const PostForm = ({ control, contentLength }: Props) => {
         render={({ field, fieldState }) => (
           <Box mt={2}>
             <Input
+              name="images"
               type="file"
               inputProps={{ multiple: true }}
               onChange={(e) => {

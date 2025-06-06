@@ -15,7 +15,7 @@ import { useFetchPostDetail } from '@/hooks/useFetchPostDetail'
 import { useRequireSignedIn } from '@/hooks/useRequireSignedIn'
 import { useUserState } from '@/hooks/useGlobalState'
 import { Link, useParams } from 'react-router-dom'
-import PostDetailItem from '@/components/PostDetailItem'
+import PostDetailItem from '@/features/post/components/PostDetailItem'
 
 const CurrentPostDetail = () => {
   useRequireSignedIn()

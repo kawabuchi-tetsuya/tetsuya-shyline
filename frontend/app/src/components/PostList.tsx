@@ -2,7 +2,7 @@
 import React from 'react'
 import { Grid } from '@mui/material'
 import { Post } from '@/types/post'
-import PostItem from './PostItem'
+import PostItem from '@/features/post/components/PostItem'
 
 type PostListProps = {
   posts: Post[]

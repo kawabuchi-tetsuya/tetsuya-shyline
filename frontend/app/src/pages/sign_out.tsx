@@ -14,6 +14,7 @@ const SignOut = () => {
     setUser({
       id: 0,
       name: '',
+      nickname: '',
       email: '',
       isSignedIn: false,
       isFetched: true,
